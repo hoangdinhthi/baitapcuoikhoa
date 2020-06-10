@@ -1,21 +1,29 @@
-import React, { Component } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
-import Proptypes from 'prop-types'
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
-import Main from './componentsOrder/Main'
-import store from '../../reduxapp/store'
+import React, { Component } from 'react';
+import { Text, View, StyleSheet } from 'react-native';
+import Proptypes from 'prop-types';
 
 class Index extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   render() {
     return (
-      <Provider store={store}>
-        <Main />
-      </Provider>
-    )
+      <View style={styles.container}>
+        <Text> Address </Text>
+      </View>
+    );
   }
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
-Index.propTypes = {}
+Index.propTypes = {};
 
-export default Index
+export default Index;

@@ -13,6 +13,11 @@ import Icon from '../../components/base/Icon';
 import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
 import { authActions } from '../../reduxapp/reducer/authReducer';
+import InfoText from './InfoText';
+import { Avatar, ListItem } from 'react-native-elements';
+import BaseIcon from './Icon';
+import Chevron from './Chevron';
+import { red, bold } from 'ansi-colors';
 
 class Index extends Component {
   constructor(props) {
@@ -23,31 +28,23 @@ class Index extends Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <ScrollView showsHorizontalScrollIndicator={false}>
-          <View style={styles.titleBar}>
-            <Icon
-              type="Ionicons"
-              name="ios-arrow-back"
-              size={24}
-              color="#52575D"
-            />
-            <Icon type="Ionicons" name="md-more" size={24} color="#52575D" />
-          </View>
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
+          style={styles.scroll}>
+          <View style={styles.titleBar} />
           <View style={{ alignSelf: 'center' }}>
             <View style={styles.profileImage}>
               <Image
                 source={require('../../Images/pikachu.jpg')}
                 style={styles.image}
-                resizeMode="center"
               />
             </View>
-
             <View style={styles.active} />
             <View style={styles.add}>
               <Icon
                 type="Ionicons"
                 name="ios-add"
-                size={48}
+                size={30}
                 color="#DFD8C8"
                 style={{ marginTop: 6, marginLeft: 2 }}
               />
@@ -61,32 +58,142 @@ class Index extends Component {
               Developer
             </Text>
           </View>
-          <View style={styles.statsContainer}>
-            <View style={styles.statsBox}>
-              <Text style={[styles.text, { fontSize: 24 }]}>483</Text>
-              <Text style={[styles.text, styles.subText]}>Ví</Text>
-            </View>
-            <View
-              style={[
-                styles.statsBox,
-                {
-                  borderColor: '#DFD8C8',
-                  borderLeftWidth: 1,
-                  borderRightWidth: 1,
-                },
-              ]}>
-              <Text style={[styles.text, { fontSize: 24 }]}>45, 844</Text>
-              <Text style={[styles.text, styles.subText]}>Ví</Text>
-            </View>
-            <View style={styles.statsBox}>
-              <Text style={[styles.text, { fontSize: 24 }]}>302</Text>
-              <Text style={[styles.text, styles.subText]}>Ví</Text>
-            </View>
+          <InfoText text="Account" />
+          <View>
+            <ListItem
+              // chevron
+              title="Currency"
+              rightTitle="USD"
+              rightTitleStyle={{ fontSize: 15 }}
+              onPress={() => this.onPressOptions()}
+              containerStyle={styles.listItemContainer}
+              leftIcon={
+                <BaseIcon
+                  containerStyle={{ backgroundColor: '#FAD291' }}
+                  icon={{
+                    type: 'font-awesome',
+                    name: 'money',
+                  }}
+                />
+              }
+              rightIcon={<Chevron />}
+            />
+            <ListItem
+              title="Location"
+              rightTitle="New York"
+              rightTitleStyle={{ fontSize: 15 }}
+              onPress={() => this.onPressOptions()}
+              containerStyle={styles.listItemContainer}
+              leftIcon={
+                <BaseIcon
+                  containerStyle={{ backgroundColor: '#57DCE7' }}
+                  icon={{
+                    type: 'material',
+                    name: 'place',
+                  }}
+                />
+              }
+              rightIcon={<Chevron />}
+            />
+            <ListItem
+              title="Language"
+              rightTitle="English"
+              rightTitleStyle={{ fontSize: 15 }}
+              onPress={() => this.onPressOptions()}
+              containerStyle={styles.listItemContainer}
+              leftIcon={
+                <BaseIcon
+                  containerStyle={{ backgroundColor: '#FEA8A1' }}
+                  icon={{
+                    type: 'material',
+                    name: 'language',
+                  }}
+                />
+              }
+              rightIcon={<Chevron />}
+            />
+          </View>
+          <InfoText text="More" />
+          <View>
+            <ListItem
+              title="About US"
+              onPress={() => this.onPressOptions()}
+              containerStyle={styles.listItemContainer}
+              leftIcon={
+                <BaseIcon
+                  containerStyle={{ backgroundColor: '#A4C8F0' }}
+                  icon={{
+                    type: 'ionicon',
+                    name: 'md-information-circle',
+                  }}
+                />
+              }
+              rightIcon={<Chevron />}
+            />
+            <ListItem
+              title="Terms and Policies"
+              onPress={() => this.onPressOptions()}
+              containerStyle={styles.listItemContainer}
+              leftIcon={
+                <BaseIcon
+                  containerStyle={{ backgroundColor: '#C6C7C6' }}
+                  icon={{
+                    type: 'entypo',
+                    name: 'light-bulb',
+                  }}
+                />
+              }
+              rightIcon={<Chevron />}
+            />
+
+            <ListItem
+              title="Rate Us"
+              onPress={() => this.onPressOptions()}
+              containerStyle={styles.listItemContainer}
+              badge={{
+                value: 5,
+                textStyle: { color: 'white' },
+                containerStyle: { backgroundColor: 'gray', marginTop: 0 },
+              }}
+              leftIcon={
+                <BaseIcon
+                  containerStyle={{
+                    backgroundColor: '#FECE44',
+                  }}
+                  icon={{
+                    type: 'entypo',
+                    name: 'star',
+                  }}
+                />
+              }
+              rightIcon={<Chevron />}
+            />
+            <ListItem
+              title="Send FeedBack"
+              onPress={() => this.onPressOptions()}
+              containerStyle={styles.listItemContainer}
+              leftIcon={
+                <BaseIcon
+                  containerStyle={{
+                    backgroundColor: '#00C001',
+                  }}
+                  icon={{
+                    type: 'materialicon',
+                    name: 'feedback',
+                  }}
+                />
+              }
+              rightIcon={<Chevron />}
+            />
           </View>
           <View style={{ borderWidth: 1, borderColor: '#DFD8C8' }} />
-          <TouchableOpacity onPress={this.props.requestLogout}>
-            <Text>Logout</Text>
-          </TouchableOpacity>
+          <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+            <TouchableOpacity
+              style={styles.buttonLogout}
+              onPress={this.props.requestLogout}>
+              <Text style={styles.textLogout}>LOGOUT</Text>
+            </TouchableOpacity>
+          </View>
         </ScrollView>
       </SafeAreaView>
     );
@@ -112,17 +219,11 @@ const styles = StyleSheet.create({
   text: {
     color: '#52575D',
   },
-  subText: {
-    fontSize: 12,
-    color: '#AEB5BC',
-    textTransform: 'uppercase',
-    fontWeight: '500',
-  },
   image: {
     flex: 1,
     width: 200,
     height: 200,
-    borderRadius: 100,
+    borderRadius: 200,
   },
   titleBar: {
     flexDirection: 'row',
@@ -135,35 +236,27 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 200,
     overflow: 'hidden',
-    backgroundColor: 'red',
-  },
-  dm: {
-    backgroundColor: '#414448',
-    position: 'absolute',
-    top: 20,
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#414448',
   },
   active: {
     backgroundColor: '#34FFB9',
     position: 'absolute',
-    bottom: 28,
+    bottom: 150,
     left: 10,
     padding: 4,
-    height: 20,
-    width: 20,
-    borderRadius: 10,
+    height: 30,
+    width: 30,
+    borderRadius: 15,
   },
   add: {
     backgroundColor: '#414448',
     position: 'absolute',
-    bottom: 0,
+    bottom: 28,
+    padding: 3,
     right: 0,
-    width: 60,
-    height: 60,
+    width: 40,
+    height: 40,
     borderRadius: 30,
     alignItems: 'center',
     justifyContent: 'center',
@@ -173,67 +266,36 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 16,
   },
-  statsContainer: {
-    flexDirection: 'row',
-    alignSelf: 'center',
-    marginTop: 32,
+  scroll: {
+    backgroundColor: 'white',
   },
-  statsBox: {
-    flex: 1,
+  userRow: {
     alignItems: 'center',
+    flexDirection: 'row',
+    paddingBottom: 8,
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 6,
   },
-  mediaImageContainer: {
-    width: 180,
-    height: 200,
-    borderRadius: 12,
-    overflow: 'hidden',
-    marginHorizontal: 10,
+  userImage: {
+    marginRight: 12,
   },
-  mediaCount: {
-    backgroundColor: '#414448',
-    position: 'absolute',
-    top: '62%',
-    marginLeft: 30,
-    width: 100,
-    height: 100,
+  listItemContainer: {
+    height: 55,
+    borderWidth: 0.5,
+    borderColor: '#ECECEC',
+  },
+  buttonLogout: {
+    width: 300,
+    height: 40,
+    backgroundColor: '#ff0000',
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 12,
-    shadowColor: 'rgba(0, 0, 0, 0.38)',
-    shadowOffset: { width: 0, height: 10 },
-    shadowRadius: 20,
-    shadowOpacity: 1,
   },
-  recent: {
-    marginLeft: 78,
-    marginTop: 32,
-    marginBottom: 6,
-    fontSize: 10,
-  },
-  recentItem: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginBottom: 16,
-  },
-  recentItemIndicator: {
-    backgroundColor: '#CABFAB',
-    padding: 4,
-    height: 12,
-    width: 12,
-    borderRadius: 6,
-    marginTop: 3,
-    marginRight: 20,
-  },
-  mainbody: {
-    marginTop: 30,
-    marginLeft: 24,
-    marginRight: 24,
-    marginBottom: 70,
-  },
-  imgprofile: {
-    marginLeft: 100,
-    marginTop: 50,
-    height: 120,
-    width: 120,
+  textLogout: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });

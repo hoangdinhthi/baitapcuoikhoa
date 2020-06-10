@@ -46,66 +46,8 @@ class Cart extends Component {
               alignItems: 'flex-start',
               justifyContent: 'space-evenly',
             }}>
-            {/* <Text style={styles.flatListItems}> {item.name} </Text>
-                            <Text style={styles.flatListItems}> {item.foodDescription} </Text> */}
             <Text style={styles.flatListItems1}> hóa đơn 1 </Text>
             <Text style={styles.flatListItems2}>tình trạng</Text>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
-              <Icon type="Ionicons" name="md-star" size={15} />
-              <Text
-                style={{ fontSize: 14, fontWeight: '700', marginRight: 50 }}>
-                4.9
-              </Text>
-              <Text> 2.6 km </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-              }}>
-              <Text
-                style={{
-                  borderWidth: 1,
-                  borderColor: '#a9a9a9',
-                  width: 60,
-                  borderRadius: 5,
-                  fontSize: 10,
-                  fontWeight: '400',
-                  color: 'red',
-                  marginRight: 20,
-                }}>
-                40% off
-              </Text>
-              <Text
-                style={{
-                  borderWidth: 1,
-                  borderColor: '#a9a9a9',
-                  width: 60,
-                  borderRadius: 5,
-                  fontSize: 10,
-                  fontWeight: '400',
-                  color: 'red',
-                  marginRight: 20,
-                }}>
-                FREESHIP
-              </Text>
-              <Text
-                style={{
-                  borderWidth: 1,
-                  borderColor: '#a9a9a9',
-                  width: 90,
-                  borderRadius: 5,
-                  fontSize: 10,
-                  fontWeight: '400',
-                  color: 'red',
-                }}>
-                pickup support
-              </Text>
-            </View>
           </View>
         </View>
         <View style={{ height: 1, backgroundColor: 'white' }} />

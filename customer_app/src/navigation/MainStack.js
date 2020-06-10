@@ -27,6 +27,7 @@ const MainStack = () => {
         options={{
           headerShown: true,
           headerTitle: 'List Store',
+          headerRight: () => <ShoppingCartIcon />,
         }}
       />
       <Stack.Screen

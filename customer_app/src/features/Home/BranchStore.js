@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
-import { Text, View, SafeAreaView, Platform, FlatList } from 'react-native'
-import Proptypes from 'prop-types'
-import BranchStoreList from '../../components/Home/BranchStoreList'
-import listBranch from '../../data/ListBranchStore'
+import React, { Component } from 'react';
+import { Text, View, SafeAreaView, Platform, FlatList } from 'react-native';
+import Proptypes from 'prop-types';
+import BranchStoreList from '../../components/Home/BranchStoreList';
+import listBranch from '../../data/ListBranchStore';
 
 class BranchStore extends Component {
   constructor(props) {
-    super(props)
-    this.state = {}
+    super(props);
+    this.state = {};
   }
 
   render() {
@@ -19,18 +19,22 @@ class BranchStore extends Component {
               data={listBranch}
               renderItem={({ item, index }) => {
                 return (
-                  <BranchStoreList item={item} index={index} navigations={this.props.navigation} />
-                )
+                  <BranchStoreList
+                    item={item}
+                    index={index}
+                    navigations={this.props.navigation}
+                  />
+                );
               }}
               keyExtractor={item => `${item.name}`}
             />
           </View>
         </View>
       </SafeAreaView>
-    )
+    );
   }
 }
 
-BranchStore.propTypes = {}
+BranchStore.propTypes = {};
 
-export default BranchStore
+export default BranchStore;
