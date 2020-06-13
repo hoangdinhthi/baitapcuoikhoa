@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
   Text,
   View,
@@ -9,17 +9,23 @@ import {
   StatusBar,
   ScrollView,
   Image,
-} from 'react-native'
-import Proptypes from 'prop-types'
+} from 'react-native';
+import Proptypes from 'prop-types';
 
 class StoreList extends Component {
   constructor(props) {
-    super(props)
-    this.state = {}
+    super(props);
+    this.state = {};
   }
 
   render() {
-    const { imageUri, nameStore, locationStore, discountStore } = this.props
+    const {
+      imageUri,
+      nameStore,
+      locationStore,
+      discountStore,
+      item,
+    } = this.props;
     return (
       <View
         style={{
@@ -31,7 +37,7 @@ class StoreList extends Component {
         }}>
         <View style={{ flex: 2 }}>
           <Image
-            source={imageUri}
+            source={{ uri: item.image }}
             style={{
               flex: 1,
               width: null,
@@ -41,25 +47,35 @@ class StoreList extends Component {
           />
         </View>
         <View style={{ flex: 1 }}>
-          <Text style={{ fontSize: 14, fontWeight: '400' }}>{nameStore}</Text>
-          <Text style={{ fontSize: 14, fontWeight: '400', color: '#00ffff' }}>{locationStore}</Text>
+          <Text style={{ fontSize: 14, fontWeight: '400' }}>{item.name}</Text>
+          <Text
+            style={{
+              height: 40,
+              fontSize: 14,
+              fontWeight: '400',
+              color: '#00ffff',
+            }}>
+            {item.description}
+          </Text>
+          <Text style={{ fontSize: 14, fontWeight: '400' }}>Prices: {item.price}</Text>
           <Text
             style={{
               borderWidth: 1,
               borderColor: '#a9a9a9',
-              width: 90,
-              borderRadius: 10,
+              width: 130,
+              borderRadius: 5,
               fontSize: 10,
               fontWeight: '400',
+              paddingHorizontal: 40,
             }}>
-            {discountStore}
+            Add Cart
           </Text>
         </View>
       </View>
-    )
+    );
   }
 }
 
-StoreList.propTypes = {}
+StoreList.propTypes = {};
 
-export default StoreList
+export default StoreList;

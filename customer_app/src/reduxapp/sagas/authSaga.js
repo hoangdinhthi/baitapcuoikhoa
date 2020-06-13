@@ -2,6 +2,7 @@ import { call, put, takeLatest, delay } from 'redux-saga/effects';
 import AppStorage from '../../config/network/storage';
 import { navigate } from '../../navigation/helper';
 import * as AuthService from '../../service/authService';
+import * as MainService from '../../service/mainService';
 import { authTypes } from '../reducer/authReducer';
 import { sharedTypes } from '../reducer/sharedReducer';
 import { showMessage } from 'react-native-flash-message';
@@ -44,4 +45,27 @@ function* logoutWorker(action) {
 
 export function* logoutWatcher() {
   yield takeLatest(authTypes.REQUEST_LOGOUT, logoutWorker);
+}
+
+function* fetchPreviewWorker(action) {
+  try {
+    yield put({
+      type: sharedTypes.FETCHING,
+    });
+    const res = yield call(MainService.fetchPreview);
+    yield put({
+      type: sharedTypes.FETCH_PREVIEW_SUCCESS,
+      payload: res,
+    });
+  } catch (error) {
+    console.log('auth', error);
+  } finally {
+    yield put({
+      type: sharedTypes.DONE,
+    });
+  }
+}
+
+export function* fetchPreviewWatcher() {
+  yield takeLatest(sharedTypes.FETCH_PREVIEW, fetchPreviewWorker);
 }

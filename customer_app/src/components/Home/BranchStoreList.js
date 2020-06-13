@@ -77,6 +77,8 @@ class BranchStoreList extends Component {
                     fontWeight: '400',
                     color: 'red',
                     marginRight: 20,
+                    paddingVertical: 3,
+                    paddingHorizontal: 17,
                   }}>
                   Add Cart
                 </Text>
@@ -93,6 +95,8 @@ class BranchStoreList extends Component {
                     fontSize: 10,
                     fontWeight: '400',
                     color: 'red',
+                    paddingVertical: 3,
+                    paddingHorizontal: 24,
                   }}>
                   Store Detail
                 </Text>

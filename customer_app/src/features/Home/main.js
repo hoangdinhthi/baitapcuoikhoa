@@ -11,11 +11,16 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  FlatList,
 } from 'react-native';
 import Proptypes from 'prop-types';
 import Swiper from 'react-native-swiper';
 import Icon from '../../components/base/Icon';
 import StoreList from '../../components/Home/StoreList';
+import listBranch from '../../data/ListBranchStore';
+import { sharedActions } from '../../reduxapp/reducer/sharedReducer';
+import { connect } from 'react-redux';
+import { bindActionCreators, compose } from 'redux';
 
 const { height, width } = Dimensions.get('window');
 class Main extends Component {
@@ -29,9 +34,11 @@ class Main extends Component {
     if (Platform.OS === 'android') {
       this.startHeaderHeight = 100 + StatusBar.currentHeight;
     }
+    this.props.fetchPreview();
   }
 
   render() {
+    const { categories } = this.props;
     return (
       <SafeAreaView style={styles.common}>
         <View style={styles.common}>
@@ -62,33 +69,15 @@ class Main extends Component {
                 }}>
                 What can we help you find ?
               </Text>
-              <View style={{ height: 170, marginTop: 20 }}>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                  <StoreList
-                    imageUri={require('../../Images/download.jpg')}
-                    nameStore="Name Store"
-                    locationStore="new Location"
-                    discountStore="discount Store"
-                  />
-                  <StoreList
-                    imageUri={require('../../Images/download.jpg')}
-                    nameStore="Name Store"
-                    locationStore="new Location"
-                    discountStore="discount Store"
-                  />
-                  <StoreList
-                    imageUri={require('../../Images/download.jpg')}
-                    nameStore="Name Store"
-                    locationStore="new Location"
-                    discountStore="discount Store"
-                  />
-                  <StoreList
-                    imageUri={require('../../Images/download.jpg')}
-                    nameStore="Name Store"
-                    locationStore="new Location"
-                    discountStore="discount Store"
-                  />
-                </ScrollView>
+              <View style={{ height: 220, marginTop: 20 }}>
+                <FlatList
+                  horizontal
+                  data={categories?.pizza ? categories.pizza : []}
+                  renderItem={({ item, index }) => {
+                    return <StoreList item={item} index={index} />;
+                  }}
+                  keyExtractor={item => `${item.id}`}
+                />
               </View>
               <View
                 style={{
@@ -156,41 +145,41 @@ class Main extends Component {
                 </View>
               </View>
               <View style={{ marginTop: 20 }}>
-                <Text
+                <View
                   style={{
-                    fontSize: 20,
-                    fontWeight: '700',
-                    paddingHorizontal: 20,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
                   }}>
-                  Hải Sản
-                </Text>
-                <View style={{ height: 170, marginTop: 20 }}>
-                  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    <StoreList
-                      imageUri={require('../../Images/haisan.jpg')}
-                      nameStore="Name Store"
-                      locationStore="new Location"
-                      discountStore="discount Store"
-                    />
-                    <StoreList
-                      imageUri={require('../../Images/haisan.jpg')}
-                      nameStore="Name Store"
-                      locationStore="new Location"
-                      discountStore="discount Store"
-                    />
-                    <StoreList
-                      imageUri={require('../../Images/haisan.jpg')}
-                      nameStore="Name Store"
-                      locationStore="new Location"
-                      discountStore="discount Store"
-                    />
-                    <StoreList
-                      imageUri={require('../../Images/haisan.jpg')}
-                      nameStore="Name Store"
-                      locationStore="new Location"
-                      discountStore="discount Store"
-                    />
-                  </ScrollView>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontWeight: '700',
+                      paddingHorizontal: 20,
+                    }}>
+                    Mỳ ý
+                  </Text>
+                  <TouchableOpacity onPress={()=>navigation.navigate('glufmm',{
+                    slugName:'m'
+                  })}>
+                    <Text
+                      style={{
+                        fontSize: 15,
+                        fontWeight: '200',
+                        paddingHorizontal: 20,
+                      }}>
+                      More >
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={{ height: 220, marginTop: 20 }}>
+                  <FlatList
+                    horizontal
+                    data={categories?.m ? categories.m : []}
+                    renderItem={({ item, index }) => {
+                      return <StoreList item={item} index={index} />;
+                    }}
+                    keyExtractor={item => `${item.id}`}
+                  />
                 </View>
                 <View style={{ paddingHorizontal: 20 }}>
                   <Swiper
@@ -229,41 +218,39 @@ class Main extends Component {
               </View>
 
               <View style={{ marginTop: 20 }}>
-                <Text
+                <View
                   style={{
-                    fontSize: 20,
-                    fontWeight: '700',
-                    paddingHorizontal: 20,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
                   }}>
-                  Bánh Tráng Ngon
-                </Text>
-                <View style={{ height: 170, marginTop: 20 }}>
-                  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    <StoreList
-                      imageUri={require('../../Images/banhtrang.jpg')}
-                      nameStore="Name Store"
-                      locationStore="new Location"
-                      discountStore="discount Store"
-                    />
-                    <StoreList
-                      imageUri={require('../../Images/banhtrang.jpg')}
-                      nameStore="Name Store"
-                      locationStore="new Location"
-                      discountStore="discount Store"
-                    />
-                    <StoreList
-                      imageUri={require('../../Images/banhtrang.jpg')}
-                      nameStore="Name Store"
-                      locationStore="new Location"
-                      discountStore="discount Store"
-                    />
-                    <StoreList
-                      imageUri={require('../../Images/banhtrang.jpg')}
-                      nameStore="Name Store"
-                      locationStore="new Location"
-                      discountStore="discount Store"
-                    />
-                  </ScrollView>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontWeight: '700',
+                      paddingHorizontal: 20,
+                    }}>
+                    Topping
+                  </Text>
+                  <TouchableOpacity>
+                    <Text
+                      style={{
+                        fontSize: 15,
+                        fontWeight: '200',
+                        paddingHorizontal: 20,
+                      }}>
+                      More >
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={{ height: 220, marginTop: 20 }}>
+                  <FlatList
+                    horizontal
+                    data={categories?.topping ? categories.topping : []}
+                    renderItem={({ item, index }) => {
+                      return <StoreList item={item} index={index} />;
+                    }}
+                    keyExtractor={item => `${item.id}`}
+                  />
                 </View>
               </View>
             </View>
@@ -275,6 +262,21 @@ class Main extends Component {
 }
 
 Main.propTypes = {};
+
+const mapStateToProps = state => ({
+  categories: state.share.categories,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      fetchPreview: sharedActions.fetchPreview,
+    },
+    dispatch,
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -338,4 +340,3 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
 });
-export default Main;

@@ -31,6 +31,7 @@ class Index extends Component {
       dataCategories: [],
       selectCatg: 0,
       dataFood: [],
+      slug: '',
     };
   }
 
@@ -52,7 +53,9 @@ class Index extends Component {
   }
 
   render() {
-    const { cartItems } = this.props;
+    const { cartItems, categories } = this.props;
+    const { slug } = this.state;
+    const cateKeys = Object.keys(categories);
     return (
       <ScrollView>
         <View
@@ -113,13 +116,19 @@ class Index extends Component {
               </Text>
               <FlatList
                 horizontal
-                data={this.state.dataCategories}
+                data={Object.keys(categories)}
                 renderItem={({ item }) => this._renderItem(item)}
                 keyExtractor={(item, index) => index.toString()}
               />
               <FlatList
                 // horizontal={true}
-                data={this.state.dataFood}
+                data={
+                  slug
+                    ? categories[slug]
+                    : cateKeys.length
+                    ? categories[cateKeys[0]]
+                    : []
+                }
                 numColumns={2}
                 renderItem={this._renderItemFood}
                 keyExtractor={(item, index) => index.toString()}
@@ -127,8 +136,6 @@ class Index extends Component {
               <View style={{ height: 20 }} />
             </View>
           </View>
-          <Text>App Delivery</Text>
-          <Text>{JSON.stringify(this.state.dataCategories)}</Text>
         </View>
       </ScrollView>
     );
@@ -138,16 +145,21 @@ class Index extends Component {
     return (
       <TouchableOpacity
         style={[styles.divCategorie, { backgroundColor: item.color }]}
-        onPress={() => this.setState({ selectCatg: item.id })}>
-        <Image
-          style={{ width: 100, height: 80 }}
-          resizeMode="contain"
-          source={{ uri: item.image }}
-        />
-        <Text style={{ fontWeight: 'bold', fontSize: 22 }}>{item.name}</Text>
+        onPress={() => this.setState({ slug: item })}>
+        <Text style={{ fontWeight: 'bold', fontSize: 22 }}>{item}</Text>
       </TouchableOpacity>
     );
   }
+
+  getName = slug => {
+    switch (slug) {
+      case 'm':
+        return 'My Y';
+
+      default:
+        return 'Default ';
+    }
+  };
 
   _renderItemFood = ({ item }) => {
     const catg = this.state.selectCatg;
@@ -290,6 +302,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   cartItems: state.cartItems,
+  categories: state.share.categories,
 });
 
 const mapDispatchToProps = dispatch =>
