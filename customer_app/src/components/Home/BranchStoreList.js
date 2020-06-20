@@ -23,6 +23,8 @@ class BranchStoreList extends Component {
   }
 
   render() {
+    const { item } = this.props;
+    const hasInCart = this.props.cartItems.find(el => el.name === item.name);
     return (
       <View style={{ flex: 1, flexDirection: 'column' }}>
         <View
@@ -32,7 +34,7 @@ class BranchStoreList extends Component {
             backgroundColor: 'white',
           }}>
           <Image
-            source={{ uri: this.props.item.imageUrl }}
+            source={{ uri: item.image }}
             style={{ width: 100, height: 100, margin: 5 }}
           />
           <View
@@ -43,20 +45,18 @@ class BranchStoreList extends Component {
               alignItems: 'flex-start',
               justifyContent: 'space-evenly',
             }}>
-            <Text style={styles.flatListItems1}> {this.props.item.name} </Text>
-            <Text style={styles.flatListItems2}>
-              {this.props.item.foodDescription}
-            </Text>
+            <Text style={styles.flatListItems1}> {item.name} </Text>
+            <Text style={styles.flatListItems2}>{item.description}</Text>
             <View
               style={{
                 flex: 1,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
               }}>
-              <Icon type="Ionicons" name="md-star" size={15} />
+              <Text>Prices: </Text>
               <Text
                 style={{ fontSize: 14, fontWeight: '700', marginRight: 50 }}>
-                2000
+                {item.price}
               </Text>
             </View>
             <View
@@ -64,7 +64,8 @@ class BranchStoreList extends Component {
                 flexDirection: 'row',
               }}>
               <TouchableHighlight
-                onPress={() => this.onClickAddCarts(this.props.item)}
+                onPress={() => this.onClickAddCarts(item)}
+                disabled={hasInCart}
                 style={{ alignItems: 'center', justifyContent: 'center' }}>
                 <Text
                   style={{
@@ -80,7 +81,7 @@ class BranchStoreList extends Component {
                     paddingVertical: 3,
                     paddingHorizontal: 17,
                   }}>
-                  Add Cart
+                  {hasInCart ? 'Added Card' : 'Add Cart'}
                 </Text>
               </TouchableHighlight>
               <TouchableHighlight

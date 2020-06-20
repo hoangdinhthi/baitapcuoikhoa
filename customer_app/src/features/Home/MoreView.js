@@ -6,34 +6,32 @@ import listBranch from '../../data/ListBranchStore';
 import { sharedActions } from '../../reduxapp/reducer/sharedReducer';
 import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
-
-class BranchStore extends Component {
+class MoreView extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
   componentDidMount() {
-    this.props.fetchFoodPreview();
+    this.props.fetchSlugFoods(this.props.route.params.slugName);
   }
 
   render() {
-    const { foods } = this.props;
+    const { slugFoods } = this.props;
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <View style={{ flex: 1, marginTop: Platform.OS === 'ios' ? 34 : 0 }}>
           <View style={{ flex: 1 }}>
             <FlatList
-              data={foods ? foods : []}
-              renderItem={({ item, index }) => {
+              data={slugFoods ? slugFoods : []}
+              renderItem={({ item }) => {
                 return (
                   <BranchStoreList
                     item={item}
-                    index={index}
                     navigations={this.props.navigation}
                   />
                 );
               }}
-              keyExtractor={item => `${item.name}`}
+              keyExtractor={item => `${item.id}`}
             />
           </View>
         </View>
@@ -42,16 +40,16 @@ class BranchStore extends Component {
   }
 }
 
-BranchStore.propTypes = {};
+MoreView.propTypes = {};
 const mapStateToProps = state => ({
-  foods: state.share.foods,
+  slugFoods: state.share.slugFoods,
 });
+
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      fetchFoodPreview: sharedActions.fetchFoodPreview,
+      fetchSlugFoods: sharedActions.fetchSlugFoods,
     },
     dispatch,
   );
-
-export default connect(mapStateToProps, mapDispatchToProps)(BranchStore);
+export default connect(mapStateToProps, mapDispatchToProps)(MoreView);

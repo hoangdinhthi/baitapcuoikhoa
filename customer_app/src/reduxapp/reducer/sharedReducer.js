@@ -5,6 +5,8 @@ export const sharedTypes = {
   FETCH_PREVIEW_SUCCESS: '@SHARE/FETCH_PREVIEW_SUCCESS',
   FETCH_SLUG: '@SHARE/FETCH_SLUG',
   FETCH_SLUG_SUCCESS: '@SHARE/FETCH_SLUG_SUCCESS',
+  FETCH_FOODS_PREVIEW: '@SHARE/FETCH_FOODS_PREVIEW',
+  FETCH_FOODS_SUCCESS: '@SHARE/FETCH_FOODS_SUCCESS',
 };
 
 const requestLogin = data => {
@@ -22,20 +24,27 @@ const fetchPreview = () => {
 
 const fetchSlugFoods = slugName => {
   return {
-    type: sharedTypes.FETCH_PREVIEW,
+    type: sharedTypes.FETCH_SLUG,
     payload: slugName,
+  };
+};
+const fetchFoodPreview = () => {
+  return {
+    type: sharedTypes.FETCH_FOODS_PREVIEW,
   };
 };
 
 export const sharedActions = {
   fetchPreview,
   fetchSlugFoods,
+  fetchFoodPreview,
 };
 
 const initialState = {
   isFetching: false,
   categories: {},
   slugFoods: [],
+  foods: [],
 };
 
 export const sharedReducer = (state = initialState, action) => {
@@ -44,6 +53,11 @@ export const sharedReducer = (state = initialState, action) => {
       return {
         ...state,
         isFetching: true,
+      };
+    case sharedTypes.FETCH_FOODS_SUCCESS:
+      return {
+        ...state,
+        foods: action.payload,
       };
     case sharedTypes.FETCH_SLUG_SUCCESS:
       return {

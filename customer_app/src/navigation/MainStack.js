@@ -12,6 +12,7 @@ import Store from '../features/Home/index';
 import ShoppingCartIcon from '../features/Home/ShoppingCartIcon';
 import CartView from '../features/Home/CartView';
 import Checkout from '../features/Home/Checkout';
+import MoreView from '../features/Home/MoreView';
 const Stack = createStackNavigator();
 
 const MainStack = () => {
@@ -48,6 +49,15 @@ const MainStack = () => {
         name="Checkout"
         component={Checkout}
         options={{ headerShown: true, headerTitle: 'Thanh toán' }}
+      />
+      <Stack.Screen
+        name="MoreView"
+        component={MoreView}
+        options={{
+          headerShown: true,
+          headerTitle: 'More foods',
+          headerRight: () => <ShoppingCartIcon />,
+        }}
       />
     </Stack.Navigator>
   );

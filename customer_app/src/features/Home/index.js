@@ -233,27 +233,6 @@ class Index extends Component {
       quantity: 1,
       price: data.price,
     };
-
-    AsyncStorage.getItem('cart')
-      .then(datacart => {
-        if (datacart !== null) {
-          // We have data!!
-          const cart = JSON.parse(datacart);
-          cart.push(itemcart);
-          AsyncStorage.setItem('cart', JSON.stringify(cart));
-          alert(JSON.stringify(cart));
-        } else {
-          const cart = [];
-          cart.push(itemcart);
-          AsyncStorage.setItem('cart', JSON.stringify(cart));
-          alert(JSON.stringify(cart));
-        }
-
-        alert('Add Cart');
-      })
-      .catch(err => {
-        alert(err);
-      });
   }
 }
 Index.propTypes = {};

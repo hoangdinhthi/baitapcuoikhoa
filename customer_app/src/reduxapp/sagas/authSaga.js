@@ -3,6 +3,8 @@ import AppStorage from '../../config/network/storage';
 import { navigate } from '../../navigation/helper';
 import * as AuthService from '../../service/authService';
 import * as MainService from '../../service/mainService';
+import * as MoreService from '../../service/moreService';
+import * as FoodService from '../../service/foodService';
 import { authTypes } from '../reducer/authReducer';
 import { sharedTypes } from '../reducer/sharedReducer';
 import { showMessage } from 'react-native-flash-message';
@@ -68,4 +70,54 @@ function* fetchPreviewWorker(action) {
 
 export function* fetchPreviewWatcher() {
   yield takeLatest(sharedTypes.FETCH_PREVIEW, fetchPreviewWorker);
+}
+
+function* fetchSlugFoodsWorker(action) {
+  try {
+    yield put({
+      type: sharedTypes.FETCHING,
+    });
+    console.log(action.payload);
+    const res = yield call(MoreService.fetchSlugFoods, action.payload);
+    console.log(res);
+    yield put({
+      type: sharedTypes.FETCH_SLUG_SUCCESS,
+      payload: res,
+    });
+  } catch (error) {
+    console.log('auth', error);
+  } finally {
+    yield put({
+      type: sharedTypes.DONE,
+    });
+  }
+}
+
+export function* fetchSlugFoodsWatcher() {
+  yield takeLatest(sharedTypes.FETCH_SLUG, fetchSlugFoodsWorker);
+}
+
+function* fetchFoodsWorker(action) {
+  try {
+    yield put({
+      type: sharedTypes.FETCHING,
+    });
+    console.log(action.payload);
+    const res = yield call(FoodService.fetchAllFoods);
+    console.log(res);
+    yield put({
+      type: sharedTypes.FETCH_FOODS_SUCCESS,
+      payload: res,
+    });
+  } catch (error) {
+    console.log('auth', error);
+  } finally {
+    yield put({
+      type: sharedTypes.DONE,
+    });
+  }
+}
+
+export function* fetchFoodsWatcher() {
+  yield takeLatest(sharedTypes.FETCH_FOODS_PREVIEW, fetchFoodsWorker);
 }

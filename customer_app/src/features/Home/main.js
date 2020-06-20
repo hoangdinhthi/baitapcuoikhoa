@@ -158,9 +158,12 @@ class Main extends Component {
                     }}>
                     Mỳ ý
                   </Text>
-                  <TouchableOpacity onPress={()=>navigation.navigate('glufmm',{
-                    slugName:'m'
-                  })}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.props.navigation.navigate('MoreView', {
+                        slugName: 'm',
+                      })
+                    }>
                     <Text
                       style={{
                         fontSize: 15,
@@ -171,7 +174,7 @@ class Main extends Component {
                     </Text>
                   </TouchableOpacity>
                 </View>
-                <View style={{ height: 220, marginTop: 20 }}>
+                <View style={{ height: 230, marginTop: 20 }}>
                   <FlatList
                     horizontal
                     data={categories?.m ? categories.m : []}
@@ -231,7 +234,12 @@ class Main extends Component {
                     }}>
                     Topping
                   </Text>
-                  <TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.props.navigation.navigate('MoreView', {
+                        slugName: 'topping',
+                      })
+                    }>
                     <Text
                       style={{
                         fontSize: 15,
@@ -242,7 +250,7 @@ class Main extends Component {
                     </Text>
                   </TouchableOpacity>
                 </View>
-                <View style={{ height: 220, marginTop: 20 }}>
+                <View style={{ height: 250, marginTop: 20 }}>
                   <FlatList
                     horizontal
                     data={categories?.topping ? categories.topping : []}

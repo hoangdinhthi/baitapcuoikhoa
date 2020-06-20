@@ -9,13 +9,19 @@ import {
   StatusBar,
   ScrollView,
   Image,
+  TouchableHighlight,
 } from 'react-native';
 import Proptypes from 'prop-types';
-
+import { addingToCart } from '../../reduxapp/actionCreator';
+import { connect } from 'react-redux';
+import { bindActionCreators, compose } from 'redux';
 class StoreList extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+  }
+  onClickAddCarts(data) {
+    this.props.addingToCart(data);
   }
 
   render() {
@@ -26,6 +32,7 @@ class StoreList extends Component {
       discountStore,
       item,
     } = this.props;
+    const hasInCart = this.props.cartItems.find(el => el.name === item.name);
     return (
       <View
         style={{
@@ -57,19 +64,28 @@ class StoreList extends Component {
             }}>
             {item.description}
           </Text>
-          <Text style={{ fontSize: 14, fontWeight: '400' }}>Prices: {item.price}</Text>
-          <Text
-            style={{
-              borderWidth: 1,
-              borderColor: '#a9a9a9',
-              width: 130,
-              borderRadius: 5,
-              fontSize: 10,
-              fontWeight: '400',
-              paddingHorizontal: 40,
-            }}>
-            Add Cart
+          <Text style={{ fontSize: 14, fontWeight: '400' }}>
+            Prices: {item.price}
           </Text>
+          <View>
+            <TouchableHighlight
+              onPress={() => this.onClickAddCarts(item)}
+              disabled={hasInCart}
+              style={{ backgroundColor: 'red' }}>
+              <Text
+                style={{
+                  borderWidth: 1,
+                  borderColor: '#a9a9a9',
+                  width: 130,
+                  borderRadius: 5,
+                  fontSize: 10,
+                  fontWeight: '400',
+                  paddingHorizontal: 40,
+                }}>
+                {hasInCart ? 'Added Card' : 'Add Cart'}
+              </Text>
+            </TouchableHighlight>
+          </View>
         </View>
       </View>
     );
@@ -77,5 +93,15 @@ class StoreList extends Component {
 }
 
 StoreList.propTypes = {};
+const mapStateToProps = state => ({
+  cartItems: state.cartItems,
+});
 
-export default StoreList;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      addingToCart,
+    },
+    dispatch,
+  );
+export default connect(mapStateToProps, mapDispatchToProps)(StoreList);
