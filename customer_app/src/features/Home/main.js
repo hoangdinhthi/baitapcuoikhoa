@@ -21,12 +21,16 @@ import listBranch from '../../data/ListBranchStore';
 import { sharedActions } from '../../reduxapp/reducer/sharedReducer';
 import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
+import ShoppingCartIcon from './ShoppingCartIcon';
+import { black } from 'ansi-colors';
 
 const { height, width } = Dimensions.get('window');
 class Main extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      status: 0,
+    };
   }
 
   componentDidMount() {
@@ -49,15 +53,23 @@ class Main extends Component {
               borderBottomWidth: 1,
               borderBottomColor: '#dddddd',
             }}>
-            <View style={styles.search}>
-              <TextInput
-                underlineColorAndroid="transparent"
-                placeholder="Try New Food"
-                placeholderTextColor="grey"
-                style={styles.text}
-              />
-              <Icon type="Ionicons" name="md-search" size={50} />
-            </View>
+            <TouchableOpacity
+              onPress={() =>
+                this.props.navigation.navigate('ACB', {
+                  status: 1,
+                })
+              }>
+              <View style={styles.search}>
+                <TextInput
+                  underlineColorAndroid="transparent"
+                  placeholder="Try New Food"
+                  placeholderTextColor="grey"
+                  style={styles.text}
+                  editable={false}
+                />
+                <Icon type="Ionicons" name="md-search" size={50} />
+              </View>
+            </TouchableOpacity>
           </View>
           <ScrollView scrollEventThrottle={16}>
             <View style={{ flex: 1, backgroundColor: 'white', paddingTop: 20 }}>
@@ -69,7 +81,11 @@ class Main extends Component {
                 }}>
                 What can we help you find ?
               </Text>
-              <View style={{ height: 220, marginTop: 20 }}>
+              <View
+                style={{
+                  height: 320,
+                  marginTop: 20,
+                }}>
                 <FlatList
                   horizontal
                   data={categories?.pizza ? categories.pizza : []}
@@ -91,7 +107,11 @@ class Main extends Component {
                   }}>
                   <TouchableOpacity
                     style={styles.button2}
-                    onPress={() => this.props.navigation.navigate('ACB')}>
+                    onPress={() =>
+                      this.props.navigation.navigate('ACB', {
+                        status: 0,
+                      })
+                    }>
                     <Icon type="Ionicons" name="md-restaurant" size={15} />
                     <Text> Food </Text>
                   </TouchableOpacity>
@@ -174,7 +194,11 @@ class Main extends Component {
                     </Text>
                   </TouchableOpacity>
                 </View>
-                <View style={{ height: 230, marginTop: 20 }}>
+                <View
+                  style={{
+                    height: 320,
+                    marginTop: 10,
+                  }}>
                   <FlatList
                     horizontal
                     data={categories?.m ? categories.m : []}
@@ -250,7 +274,11 @@ class Main extends Component {
                     </Text>
                   </TouchableOpacity>
                 </View>
-                <View style={{ height: 250, marginTop: 20 }}>
+                <View
+                  style={{
+                    height: 320,
+                    marginTop: 20,
+                  }}>
                   <FlatList
                     horizontal
                     data={categories?.topping ? categories.topping : []}
@@ -264,6 +292,11 @@ class Main extends Component {
             </View>
           </ScrollView>
         </View>
+        {this.props.cartItems.length > 0 ? (
+          <View style={styles.fabbutton}>
+            <ShoppingCartIcon />
+          </View>
+        ) : null}
       </SafeAreaView>
     );
   }
@@ -273,6 +306,7 @@ Main.propTypes = {};
 
 const mapStateToProps = state => ({
   categories: state.share.categories,
+  cartItems: state.cartItems,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -346,5 +380,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 8,
+  },
+  fabbutton: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    width: 50,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: 15,
+    bottom: 20,
   },
 });

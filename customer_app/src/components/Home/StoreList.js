@@ -36,11 +36,12 @@ class StoreList extends Component {
     return (
       <View
         style={{
-          height: 170,
-          width: 130,
+          height: 300,
+          width: 140,
           marginLeft: 20,
           borderWidth: 0.5,
-          borderColor: '#dddddd',
+          borderColor: '#DDA',
+          borderRadius: 10,
         }}>
         <View style={{ flex: 2 }}>
           <Image
@@ -54,7 +55,7 @@ class StoreList extends Component {
           />
         </View>
         <View style={{ flex: 1 }}>
-          <Text style={{ fontSize: 14, fontWeight: '400' }}>{item.name}</Text>
+          <Text style={{ fontSize: 14, fontWeight: '700' }}>{item.name}</Text>
           <Text
             style={{
               height: 40,
@@ -64,25 +65,26 @@ class StoreList extends Component {
             }}>
             {item.description}
           </Text>
-          <Text style={{ fontSize: 14, fontWeight: '400' }}>
+          <Text style={{ height: 15, fontSize: 14, fontWeight: '700' }}>
             Prices: {item.price}
           </Text>
-          <View>
+          <View style={{ flex: 1 }}>
             <TouchableHighlight
               onPress={() => this.onClickAddCarts(item)}
               disabled={hasInCart}
-              style={{ backgroundColor: 'red' }}>
+              activeOpacity={0.5}>
               <Text
                 style={{
                   borderWidth: 1,
                   borderColor: '#a9a9a9',
-                  width: 130,
+                  width: 140,
                   borderRadius: 5,
                   fontSize: 10,
                   fontWeight: '400',
-                  paddingHorizontal: 40,
+                  paddingHorizontal: 47,
+                  color: 'red',
                 }}>
-                {hasInCart ? 'Added Card' : 'Add Cart'}
+                {hasInCart ? 'Added' : 'Add Cart'}
               </Text>
             </TouchableHighlight>
           </View>

@@ -117,6 +117,7 @@ class Index extends Component {
               <FlatList
                 horizontal
                 data={Object.keys(categories)}
+                // data={this.getName(categories.slug)}
                 renderItem={({ item }) => this._renderItem(item)}
                 keyExtractor={(item, index) => index.toString()}
               />
@@ -146,7 +147,14 @@ class Index extends Component {
       <TouchableOpacity
         style={[styles.divCategorie, { backgroundColor: item.color }]}
         onPress={() => this.setState({ slug: item })}>
-        <Text style={{ fontWeight: 'bold', fontSize: 22 }}>{item}</Text>
+        {/* <Image
+          style={{ width: 100, height: 80 }}
+          resizeMode="contain"
+          source={{ uri: item.image }}
+        /> */}
+        <Text style={{ fontWeight: 'bold', fontSize: 22 }}>
+          {this.getName(item)}
+        </Text>
       </TouchableOpacity>
     );
   }
@@ -154,10 +162,13 @@ class Index extends Component {
   getName = slug => {
     switch (slug) {
       case 'm':
-        return 'My Y';
-
-      default:
-        return 'Default ';
+        return 'Mỳ ';
+      case 'pizza':
+        return 'Pizza';
+      case 'salad':
+        return 'Salad';
+      case 'topping':
+        return 'Topping';
     }
   };
 
