@@ -6,84 +6,61 @@ import {
   TextInput,
   SafeAreaView,
   Image,
+  FlatList,
 } from 'react-native';
 import { TextBase, Button, TouchWithout } from '../../components';
 import { scales, colors } from '../../config';
+import CartList from '../../components/Home/CartList';
 import Proptypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators, compose } from 'redux';
+import { sharedActions } from '../../reduxapp/reducer/sharedReducer';
+import { useNavigation } from '@react-navigation/core';
 
 class Checkout extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      phone_number: '',
+      address: '',
+    };
   }
+  _onpress = () => {
+    this.props.navigation.navigate('Store');
+  };
 
   render() {
+    var { cartItems, checkout } = this.props;
+    const { phone_number, address } = this.state;
     return (
       <SafeAreaView style={styles.container}>
         <TextBase style={styles.title}>Thông tin Cần Nhập</TextBase>
-
         <View style={styles.viewInput}>
-          <TextInput placeholder="Số điện thoại" />
+          <TextInput
+            placeholder="Số điện thoại"
+            value={phone_number}
+            onChangeText={phone_number => this.setState({ phone_number })}
+          />
         </View>
-
         <View style={styles.viewInput}>
-          <TextInput placeholder="Địa chỉ" />
+          <TextInput
+            placeholder="Địa chỉ"
+            value={address}
+            onChangeText={address => this.setState({ address })}
+          />
         </View>
         <View style={styles.viewOr}>
           <View style={styles.divider} />
           <TextBase>{'Món ăn'.toUpperCase()}</TextBase>
           <View style={styles.divider} />
         </View>
-
-        <View
-          style={{
-            flexDirection: 'row',
-            backgroundColor: 'white',
-            borderColor: 'red',
-            borderWidth: 1,
-          }}>
-          <Image
-            source={require('../../Images/haisan.jpg')}
-            style={{ width: 60, height: 60, margin: 5 }}
-          />
-          <View
-            style={{
-              flex: 1,
-              marginLeft: 10,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
-            <Text style={styles.flatListItems1}>x name</Text>
-            <Text style={styles.flatListItems1}>2000</Text>
-          </View>
-          <View style={{ height: 1, backgroundColor: '#a9a9a9' }} />
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            backgroundColor: 'white',
-            borderColor: 'red',
-            borderWidth: 1,
-          }}>
-          <Image
-            source={require('../../Images/haisan.jpg')}
-            style={{ width: 60, height: 60, margin: 5 }}
-          />
-          <View
-            style={{
-              flex: 1,
-              marginLeft: 10,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
-            <Text style={styles.flatListItems1}>x name</Text>
-            <Text style={styles.flatListItems1}>2000</Text>
-          </View>
-          <View style={{ height: 1, backgroundColor: '#a9a9a9' }} />
-        </View>
-
+        <FlatList
+          data={cartItems}
+          renderItem={({ item, index }) => {
+            return <CartList item={item} index={index} />;
+          }}
+          keyExtractor={item => `${item.id}`}
+        />
         <View style={{ flex: 1, flexDirection: 'column', marginTop: 15 }}>
           <View
             style={{
@@ -94,17 +71,47 @@ class Checkout extends Component {
               justifyContent: 'space-between',
             }}>
             <Text style={styles.flatListItems1}>Tổng tiền: </Text>
-            <Text style={styles.flatListItems1}>2000</Text>
+            <Text style={styles.flatListItems1}>
+              {cartItems.reduce(
+                (acc, el) => (acc += el.quantity * el.price),
+                0,
+              )}
+            </Text>
           </View>
         </View>
-
-        <Button title={'Thanh toán'.toUpperCase()} style={styles.btnsubmit} />
+        <Button
+          title={'Thanh toán'.toUpperCase()}
+          style={styles.btnsubmit}
+          onPress={() => {
+            checkout({
+              phone_number,
+              address,
+              orders: cartItems.map(el => ({
+                food: el._id,
+                quantity: el.quantity,
+              })),
+            });
+            cartItems = {};
+            this._onpress();
+          }}
+        />
       </SafeAreaView>
     );
   }
 }
 
 Checkout.propTypes = {};
+const mapStateToProps = state => ({
+  cartItems: state.cartItems,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      checkout: sharedActions.checkout,
+    },
+    dispatch,
+  );
 
 const styles = StyleSheet.create({
   container: {
@@ -160,4 +167,4 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
 });
-export default Checkout;
+export default connect(mapStateToProps, mapDispatchToProps)(Checkout);

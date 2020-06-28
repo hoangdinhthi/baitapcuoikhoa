@@ -7,11 +7,12 @@ export const sharedTypes = {
   FETCH_SLUG_SUCCESS: '@SHARE/FETCH_SLUG_SUCCESS',
   FETCH_FOODS_PREVIEW: '@SHARE/FETCH_FOODS_PREVIEW',
   FETCH_FOODS_SUCCESS: '@SHARE/FETCH_FOODS_SUCCESS',
+  CHECK_OUT: '@SHARE/CHECK_OUT',
 };
 
-const requestLogin = data => {
+const checkout = data => {
   return {
-    type: 'DE_QUANTITY',
+    type: sharedTypes.CHECK_OUT,
     payload: data,
   };
 };
@@ -38,6 +39,7 @@ export const sharedActions = {
   fetchPreview,
   fetchSlugFoods,
   fetchFoodPreview,
+  checkout,
 };
 
 const initialState = {

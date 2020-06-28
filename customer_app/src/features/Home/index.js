@@ -174,7 +174,7 @@ class Index extends Component {
 
   _renderItemFood = ({ item }) => {
     const catg = this.state.selectCatg;
-    const hasInCart = this.props.cartItems.find(el => el.image === item.image);
+    const hasInCart = this.props.cartItems.find(el => el.name === item.name);
 
     if (catg == 0 || catg == item.categorie) {
       return (

@@ -1,4 +1,4 @@
-import { call, put, takeLatest, delay } from 'redux-saga/effects';
+import { call, put, takeLatest, select } from 'redux-saga/effects';
 import AppStorage from '../../config/network/storage';
 import { navigate } from '../../navigation/helper';
 import * as AuthService from '../../service/authService';
@@ -14,6 +14,7 @@ function* loginWorker(action) {
     yield put({ type: sharedTypes.FETCHING });
     const res = yield call(AuthService.requestLogin, action.payload);
     yield call(AppStorage.setToken, JSON.stringify(res));
+
     yield put({
       type: authTypes.REQUEST_LOGIN_SUCCESS,
       payload: res.user,
@@ -120,4 +121,25 @@ function* fetchFoodsWorker(action) {
 
 export function* fetchFoodsWatcher() {
   yield takeLatest(sharedTypes.FETCH_FOODS_PREVIEW, fetchFoodsWorker);
+}
+
+function* checkoutsWorker(action) {
+  try {
+    yield put({
+      type: sharedTypes.FETCHING,
+    });
+    const user_id = yield select(state => state.auth.profile._id);
+    const res = yield call(FoodService.checkout, user_id, action.payload);
+    console.log(res);
+  } catch (error) {
+    console.log('auth', error);
+  } finally {
+    yield put({
+      type: sharedTypes.DONE,
+    });
+  }
+}
+
+export function* checkoutsWatcher() {
+  yield takeLatest(sharedTypes.CHECK_OUT, checkoutsWorker);
 }

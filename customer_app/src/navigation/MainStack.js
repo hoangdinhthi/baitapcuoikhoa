@@ -27,7 +27,7 @@ const MainStack = () => {
         component={BranchStore}
         options={{
           headerShown: true,
-          headerTitle: 'List Store',
+          headerTitle: 'List Foods',
           headerRight: () => <ShoppingCartIcon />,
         }}
       />
