@@ -8,6 +8,7 @@ import * as FoodService from '../../service/foodService';
 import { authTypes } from '../reducer/authReducer';
 import { sharedTypes } from '../reducer/sharedReducer';
 import { showMessage } from 'react-native-flash-message';
+import OneSignal from 'react-native-onesignal';
 
 function* loginWorker(action) {
   try {
@@ -19,6 +20,7 @@ function* loginWorker(action) {
       type: authTypes.REQUEST_LOGIN_SUCCESS,
       payload: res.user,
     });
+    yield call(OneSignal.sendTag, 'user_id', res.user._id);
     navigate('MainStack');
   } catch (error) {
     console.log('auth', error, { ...error });
@@ -142,4 +144,38 @@ function* checkoutsWorker(action) {
 
 export function* checkoutsWatcher() {
   yield takeLatest(sharedTypes.CHECK_OUT, checkoutsWorker);
+}
+
+function* getOrdersWorker(action) {
+  try {
+    yield put({
+      type: sharedTypes.FETCHING,
+    });
+    const orders = yield call(FoodService.getOrders);
+    yield put({
+      type: sharedTypes.GET_ORDERS_SUCCESS,
+      payload: orders,
+    });
+    if (action.payload) {
+      const cartDetails = yield call(
+        FoodService.getOrderDetail,
+        action.payload,
+      );
+      yield put({
+        type: sharedTypes.GET_ORDER_DETAIL_SUCCESS,
+        payload: cartDetails,
+      });
+    }
+    console.log(res);
+  } catch (error) {
+    console.log('auth', error);
+  } finally {
+    yield put({
+      type: sharedTypes.DONE,
+    });
+  }
+}
+
+export function* getOrdersWatcher() {
+  yield takeLatest(sharedTypes.GET_ORDERS, getOrdersWorker);
 }

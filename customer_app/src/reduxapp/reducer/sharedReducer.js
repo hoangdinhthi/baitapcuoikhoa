@@ -8,6 +8,10 @@ export const sharedTypes = {
   FETCH_FOODS_PREVIEW: '@SHARE/FETCH_FOODS_PREVIEW',
   FETCH_FOODS_SUCCESS: '@SHARE/FETCH_FOODS_SUCCESS',
   CHECK_OUT: '@SHARE/CHECK_OUT',
+  GET_ORDERS: '@SHARE/GET_ORDERS',
+  GET_ORDERS_SUCCESS: '@SHARE/GET_ORDERS_SUCCESS',
+  GET_ORDER_DETAIL: '@SHARE/GET_ORDER_DETAIL',
+  GET_ORDER_DETAIL_SUCCESS: '@SHARE/GET_ORDER_DETAIL_SUCCESS',
 };
 
 const checkout = data => {
@@ -47,6 +51,9 @@ const initialState = {
   categories: {},
   slugFoods: [],
   foods: [],
+  cartDetail: null,
+  orders: [],
+  orderDetail: null,
 };
 
 export const sharedReducer = (state = initialState, action) => {
@@ -55,6 +62,16 @@ export const sharedReducer = (state = initialState, action) => {
       return {
         ...state,
         isFetching: true,
+      };
+    case sharedTypes.GET_ORDERS_SUCCESS:
+      return {
+        ...state,
+        orders: action.payload,
+      };
+    case sharedTypes.GET_ORDER_DETAIL_SUCCESS:
+      return {
+        ...state,
+        orderDetail: action.payload,
       };
     case sharedTypes.FETCH_FOODS_SUCCESS:
       return {
