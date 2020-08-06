@@ -62,7 +62,7 @@ class Main extends Component {
               <View style={styles.search}>
                 <TextInput
                   underlineColorAndroid="transparent"
-                  placeholder="Try New Food"
+                  placeholder="Tìm kiếm món ăn"
                   placeholderTextColor="grey"
                   style={styles.text}
                   editable={false}
@@ -79,7 +79,7 @@ class Main extends Component {
                   fontWeight: '700',
                   paddingHorizontal: 20,
                 }}>
-                What can we help you find ?
+                Chúng tôi có thể giúp bạn tìm ?
               </Text>
               <View
                 style={{
@@ -113,22 +113,22 @@ class Main extends Component {
                       })
                     }>
                     <Icon type="Ionicons" name="md-restaurant" size={15} />
-                    <Text> Food </Text>
+                    <Text> Món ăn </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.button1}
                     onPress={() => this.props.navigation.navigate('Store')}>
                     <Icon type="Ionicons" name="md-search" size={15} />
-                    <Text> Booking </Text>
+                    <Text> N.hàng </Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.button3}>
                     <Icon type="Ionicons" name="md-cart" size={15} />
-                    <Text> Market </Text>
+                    <Text> Siêu thị </Text>
                   </TouchableOpacity>
                 </View>
                 <View>
                   <Text style={{ fontSize: 20, fontWeight: '700' }}>
-                    Popular Store
+                    Hình ảnh cửa hàng
                   </Text>
                   <Swiper
                     style={{
@@ -190,7 +190,7 @@ class Main extends Component {
                         fontWeight: '200',
                         paddingHorizontal: 20,
                       }}>
-                      More >
+                      Chi tiết >>
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -256,7 +256,7 @@ class Main extends Component {
                       fontWeight: '700',
                       paddingHorizontal: 20,
                     }}>
-                    Topping
+                    Đồ ăn kèm
                   </Text>
                   <TouchableOpacity
                     onPress={() =>
@@ -270,7 +270,7 @@ class Main extends Component {
                         fontWeight: '200',
                         paddingHorizontal: 20,
                       }}>
-                      More >
+                      Chi tiết >>
                     </Text>
                   </TouchableOpacity>
                 </View>

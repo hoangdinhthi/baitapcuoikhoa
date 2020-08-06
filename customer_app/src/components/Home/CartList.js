@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Image } from 'react-native';
 import Proptypes from 'prop-types';
-
+import { formatCurrency } from '../../service/orderService';
 class CartList extends Component {
   constructor(props) {
     super(props);
@@ -15,7 +15,7 @@ class CartList extends Component {
         style={{
           flexDirection: 'row',
           backgroundColor: 'white',
-          borderColor: 'red',
+          borderColor: '#D3D3D3',
           borderWidth: 1,
         }}>
         <Image
@@ -42,7 +42,10 @@ class CartList extends Component {
               fontSize: 14,
               fontWeight: '700',
             }}>
-            {`${item.quantity} x ${item.price} = ${item.quantity * item.price}`}
+            {`${item.quantity} x ${item.price} = ${formatCurrency(
+              parseInt(item.quantity * item.price),
+            )}`}{' '}
+            Đ
           </Text>
         </View>
         <View style={{ height: 1, backgroundColor: '#a9a9a9' }} />

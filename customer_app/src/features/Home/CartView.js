@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
 import { useNavigation } from '@react-navigation/core';
 import { increQuanity, deQuantity } from '../../reduxapp/actionCreator';
-
+import { formatCurrency } from '../../service/orderService';
 const { width } = Dimensions.get('window');
 const CartView = props => {
   const navigation = useNavigation();
@@ -41,7 +41,7 @@ const CartView = props => {
           fontWeight: 'bold',
           color: '#33c37d',
         }}>
-        Cart food
+        Giỏ hàng
       </Text>
       <View
         style={{
@@ -90,7 +90,7 @@ const CartView = props => {
                       }}>
                       {item.name}
                     </Text>
-                    <Text> Lorem Ipsum de food </Text>
+                    <Text> {item.description}</Text>
                   </View>
                   <View
                     style={{
@@ -103,7 +103,7 @@ const CartView = props => {
                         color: '#33c37d',
                         fontSize: 20,
                       }}>
-                      $ {item.price * item.quantity}
+                      {formatCurrency(parseInt(item.price * item.quantity))} Đ
                     </Text>
                     <View
                       style={{
@@ -161,7 +161,7 @@ const CartView = props => {
                 fontWeight: 'bold',
                 color: 'white',
               }}>
-              CHECKOUT
+              Xác nhận
             </Text>
           </TouchableOpacity>
           <View

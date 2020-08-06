@@ -1,7 +1,11 @@
+import { sharedTypes } from './sharedReducer';
+
 const cartItems = (state = [], action) => {
   switch (action.type) {
     case 'ADD_TO_CART':
       return [...state, { ...action.payload, quantity: 1 }];
+    case sharedTypes.CHECK_OUT_SUCCESS:
+      return [];
     case 'REMOVE_FROM_CART':
       return state.filter(cartItem => cartItem.id !== action.payload.id);
     case 'INCRE_QUANTITY':

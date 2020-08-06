@@ -12,7 +12,7 @@ import Icon from '../base/Icon';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addingToCart } from '../../reduxapp/actionCreator';
-
+import { formatCurrency } from '../../service/orderService';
 class BranchStoreList extends Component {
   constructor(props) {
     super(props);
@@ -53,10 +53,10 @@ class BranchStoreList extends Component {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
               }}>
-              <Text>Prices: </Text>
+              <Text>Giá: </Text>
               <Text
                 style={{ fontSize: 14, fontWeight: '700', marginRight: 50 }}>
-                {item.price}
+                {formatCurrency(parseInt(item.price))} Đ
               </Text>
             </View>
             <View
@@ -81,7 +81,7 @@ class BranchStoreList extends Component {
                     paddingVertical: 3,
                     paddingHorizontal: 17,
                   }}>
-                  {hasInCart ? 'Added Card' : 'Add Cart'}
+                  {hasInCart ? 'Đã thêm' : 'Thêm +'}
                 </Text>
               </TouchableHighlight>
               <TouchableHighlight
@@ -99,7 +99,7 @@ class BranchStoreList extends Component {
                     paddingVertical: 3,
                     paddingHorizontal: 24,
                   }}>
-                  Store Detail
+                  N.hàng
                 </Text>
               </TouchableHighlight>
             </View>

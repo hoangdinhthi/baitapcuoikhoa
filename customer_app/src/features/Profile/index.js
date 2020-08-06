@@ -62,7 +62,7 @@ class Index extends Component {
           <View>
             <ListItem
               // chevron
-              title="Currency"
+              title="Ví"
               rightTitle="USD"
               rightTitleStyle={{ fontSize: 15 }}
               onPress={() => this.onPressOptions()}
@@ -79,7 +79,7 @@ class Index extends Component {
               rightIcon={<Chevron />}
             />
             <ListItem
-              title="Location"
+              title="Vị trí"
               rightTitle="New York"
               rightTitleStyle={{ fontSize: 15 }}
               onPress={() => this.onPressOptions()}
@@ -96,7 +96,7 @@ class Index extends Component {
               rightIcon={<Chevron />}
             />
             <ListItem
-              title="Language"
+              title="Ngôn ngữ"
               rightTitle="English"
               rightTitleStyle={{ fontSize: 15 }}
               onPress={() => this.onPressOptions()}
@@ -116,7 +116,7 @@ class Index extends Component {
           <InfoText text="More" />
           <View>
             <ListItem
-              title="About US"
+              title="Thông tin về cửa hàng"
               onPress={() => this.onPressOptions()}
               containerStyle={styles.listItemContainer}
               leftIcon={
@@ -131,7 +131,7 @@ class Index extends Component {
               rightIcon={<Chevron />}
             />
             <ListItem
-              title="Terms and Policies"
+              title="Điều khoản và chính sách"
               onPress={() => this.onPressOptions()}
               containerStyle={styles.listItemContainer}
               leftIcon={
@@ -147,7 +147,7 @@ class Index extends Component {
             />
 
             <ListItem
-              title="Rate Us"
+              title="Đánh giá cửa hàng"
               onPress={() => this.onPressOptions()}
               containerStyle={styles.listItemContainer}
               badge={{
@@ -169,7 +169,7 @@ class Index extends Component {
               rightIcon={<Chevron />}
             />
             <ListItem
-              title="Send FeedBack"
+              title="Gửi phản hồi"
               onPress={() => this.onPressOptions()}
               containerStyle={styles.listItemContainer}
               leftIcon={
@@ -191,7 +191,7 @@ class Index extends Component {
             <TouchableOpacity
               style={styles.buttonLogout}
               onPress={this.props.requestLogout}>
-              <Text style={styles.textLogout}>LOGOUT</Text>
+              <Text style={styles.textLogout}>ĐĂNG XUẤT</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>

@@ -20,7 +20,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Icon from '../../components/base/Icon';
 import { addingToCart } from '../../reduxapp/actionCreator';
-
+import { formatCurrency } from '../../service/orderService';
 const { height, width } = Dimensions.get('window');
 
 class Index extends Component {
@@ -112,7 +112,7 @@ class Index extends Component {
                 backgroundColor: 'white',
               }}>
               <Text style={styles.titleCatg}>
-                Categories {this.state.selectCatg}
+                Loại món ăn: {this.state.slug ? this.state.slug : 'Pizza'}
               </Text>
               <FlatList
                 horizontal
@@ -147,11 +147,6 @@ class Index extends Component {
       <TouchableOpacity
         style={[styles.divCategorie, { backgroundColor: item.color }]}
         onPress={() => this.setState({ slug: item })}>
-        {/* <Image
-          style={{ width: 100, height: 80 }}
-          resizeMode="contain"
-          source={{ uri: item.image }}
-        /> */}
         <Text style={{ fontWeight: 'bold', fontSize: 22 }}>
           {this.getName(item)}
         </Text>
@@ -196,7 +191,9 @@ class Index extends Component {
             {item.name}
           </Text>
           <Text>Descp Food and Details</Text>
-          <Text style={{ fontSize: 20, color: 'green' }}>${item.price}</Text>
+          <Text style={{ fontSize: 20, color: 'green' }}>
+            {formatCurrency(parseInt(item.price))} Đ
+          </Text>
           <TouchableOpacity
             onPress={() => this.onClickAddCarts(item)}
             disabled={hasInCart}
@@ -215,7 +212,7 @@ class Index extends Component {
                 color: 'white',
                 fontWeight: 'bold',
               }}>
-              {hasInCart ? 'Added Card' : 'Add Cart'}
+              {hasInCart ? 'Đã thêm' : 'Thêm +'}
             </Text>
             <View
               style={{

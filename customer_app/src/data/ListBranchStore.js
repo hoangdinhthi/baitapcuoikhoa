@@ -16,7 +16,8 @@ const flatListData = [
   {
     key: '598a678278fee204eee51cd22',
     name: 'korean kimchi',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/f8/Various_kimchi.jpg',
+    imageUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/f/f8/Various_kimchi.jpg',
     foodDescription: 'traditional korean food',
   },
   {
@@ -50,9 +51,10 @@ const flatListData = [
   {
     key: '598a678278fee204eee51cd27',
     name: 'Sen',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/3/31/Nelumbo_nucifera1.jpg',
+    imageUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/3/31/Nelumbo_nucifera1.jpg',
     foodDescription: 'this is a Sen vietnamese',
   },
-]
+];
 
-module.exports = flatListData
+module.exports = flatListData;

@@ -1,14 +1,16 @@
 import { call, put, takeLatest, select } from 'redux-saga/effects';
 import AppStorage from '../../config/network/storage';
-import { navigate } from '../../navigation/helper';
+import { navigate, replace } from '../../navigation/helper';
 import * as AuthService from '../../service/authService';
 import * as MainService from '../../service/mainService';
 import * as MoreService from '../../service/moreService';
 import * as FoodService from '../../service/foodService';
+import * as OrderService from '../../service/orderService';
 import { authTypes } from '../reducer/authReducer';
 import { sharedTypes } from '../reducer/sharedReducer';
 import { showMessage } from 'react-native-flash-message';
 import OneSignal from 'react-native-onesignal';
+import routes from '../../navigation/Routes';
 
 function* loginWorker(action) {
   try {
@@ -22,6 +24,10 @@ function* loginWorker(action) {
     });
     yield call(OneSignal.sendTag, 'user_id', res.user._id);
     navigate('MainStack');
+    showMessage({
+      message: 'Đăng nhập thành công',
+      type: 'success',
+    });
   } catch (error) {
     console.log('auth', error, { ...error });
     if (error?.response?.data?.error) {
@@ -37,6 +43,36 @@ function* loginWorker(action) {
 
 export function* loginWatcher() {
   yield takeLatest(authTypes.REQUEST_LOGIN, loginWorker);
+}
+
+function* signupWorker(action) {
+  try {
+    yield put({ type: sharedTypes.FETCHING });
+    const res = yield call(AuthService.requestSignup, action.payload);
+    yield put({
+      type: authTypes.REQUEST_SIGNUP_SUCCESS,
+      payload: res.user,
+    });
+    navigate(routes.auth.signIn);
+    showMessage({
+      message: 'đăng ký tài khoản thành công',
+      type: 'success',
+    });
+  } catch (error) {
+    console.log('auth', error, { ...error });
+    if (error?.response?.data?.error) {
+      showMessage({
+        message: error.response.data.error,
+        type: 'danger',
+      });
+    }
+  } finally {
+    yield put({ type: sharedTypes.DONE });
+  }
+}
+
+export function* signupWatcher() {
+  yield takeLatest(authTypes.REQUEST_SIGNUP, signupWorker);
 }
 
 function* logoutWorker(action) {
@@ -132,7 +168,12 @@ function* checkoutsWorker(action) {
     });
     const user_id = yield select(state => state.auth.profile._id);
     const res = yield call(FoodService.checkout, user_id, action.payload);
-    console.log(res);
+    yield put({
+      type: sharedTypes.CHECK_OUT_SUCCESS,
+    });
+    navigate('OrderDetail', {
+      orderId: res.cart._id,
+    });
   } catch (error) {
     console.log('auth', error);
   } finally {
@@ -151,22 +192,20 @@ function* getOrdersWorker(action) {
     yield put({
       type: sharedTypes.FETCHING,
     });
-    const orders = yield call(FoodService.getOrders);
+    const orders = yield call(OrderService.fetchAllOrders);
     yield put({
       type: sharedTypes.GET_ORDERS_SUCCESS,
       payload: orders,
     });
-    if (action.payload) {
-      const cartDetails = yield call(
-        FoodService.getOrderDetail,
-        action.payload,
-      );
+    const cOrderId = yield select(state => state.share.orderDetail?._id);
+
+    if (cOrderId && action.payload && cOrderId === action.payload) {
+      const cartDetails = yield call(OrderService.fetchOrderDetail, cOrderId);
       yield put({
         type: sharedTypes.GET_ORDER_DETAIL_SUCCESS,
         payload: cartDetails,
       });
     }
-    console.log(res);
   } catch (error) {
     console.log('auth', error);
   } finally {
@@ -178,4 +217,27 @@ function* getOrdersWorker(action) {
 
 export function* getOrdersWatcher() {
   yield takeLatest(sharedTypes.GET_ORDERS, getOrdersWorker);
+}
+
+function* getOrderDetailWorker(action) {
+  try {
+    yield put({
+      type: sharedTypes.FETCHING,
+    });
+    const detail = yield call(OrderService.fetchOrderDetail, action.payload);
+    yield put({
+      type: sharedTypes.GET_ORDER_DETAIL_SUCCESS,
+      payload: detail,
+    });
+  } catch (error) {
+    console.log('auth', error);
+  } finally {
+    yield put({
+      type: sharedTypes.DONE,
+    });
+  }
+}
+
+export function* getOrderDetailWatcher() {
+  yield takeLatest(sharedTypes.GET_ORDER_DETAIL, getOrderDetailWorker);
 }

@@ -8,3 +8,12 @@ export const requestLogin = async userData => {
     return Promise.reject(error);
   }
 };
+
+export const requestSignup = async userData => {
+  try {
+    const res = await http.post('users', userData);
+    return res.data;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};

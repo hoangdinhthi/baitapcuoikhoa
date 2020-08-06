@@ -52,6 +52,8 @@ const App = () => {
     const {
       payload: { additionalData },
     } = notification;
+    console.log(additionalData);
+
     if (additionalData?.type === 'change_cart_status') {
       store.dispatch({
         type: sharedTypes.GET_ORDERS,

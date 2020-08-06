@@ -40,6 +40,8 @@ target 'baseapp' do
 
   pod 'react-native-onesignal', :path => '../node_modules/react-native-onesignal'
 
+  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+
   target 'baseappTests' do
     inherit! :search_paths
     # Pods for testing

@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
-import { Text, View } from 'react-native'
-import Proptypes from 'prop-types'
+import React, { Component } from 'react';
+import { Text, View } from 'react-native';
+import Proptypes from 'prop-types';
 
 class Index extends Component {
   constructor(props) {
-    super(props)
-    this.state = {}
-}
-  componentDidMount(){
+    super(props);
+    this.state = {};
+  }
+  componentDidMount() {
     this.props.fetchFoodsSlug(route.params.slugName);
   }
   render() {
@@ -15,11 +15,11 @@ class Index extends Component {
       <View>
         <Text> textInComponent </Text>
       </View>
-    )
+    );
   }
 }
 
-Index.propTypes = {}
+Index.propTypes = {};
 
 const mapStateToProps = state => ({
   foodsSlug: state.share.slugFoods,
@@ -34,4 +34,3 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default connect(mapStateToProps, mapDispatchToProps)(Index);
-

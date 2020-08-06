@@ -15,6 +15,7 @@ import Proptypes from 'prop-types';
 import { addingToCart } from '../../reduxapp/actionCreator';
 import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
+import { formatCurrency } from '../../service/orderService';
 class StoreList extends Component {
   constructor(props) {
     super(props);
@@ -66,7 +67,7 @@ class StoreList extends Component {
             {item.description}
           </Text>
           <Text style={{ height: 15, fontSize: 14, fontWeight: '700' }}>
-            Prices: {item.price}
+            Giá: {formatCurrency(parseInt(item.price))} Đ
           </Text>
           <View style={{ flex: 1 }}>
             <TouchableHighlight
@@ -84,7 +85,7 @@ class StoreList extends Component {
                   paddingHorizontal: 47,
                   color: 'red',
                 }}>
-                {hasInCart ? 'Added' : 'Add Cart'}
+                {hasInCart ? 'Đã thêm' : 'Thêm +'}
               </Text>
             </TouchableHighlight>
           </View>

@@ -8,6 +8,8 @@ class Index extends Component {
     this.state = {};
   }
 
+  componentDidMount() {}
+
   render() {
     return (
       <View style={styles.container}>

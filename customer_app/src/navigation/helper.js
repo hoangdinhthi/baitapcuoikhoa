@@ -5,6 +5,10 @@ export function navigate(routeName, params = {}) {
   navigationRef.current.navigate(routeName, params);
 }
 
+export function replace(routeName, params = {}) {
+  navigationRef.current.replace(routeName, params);
+}
+
 export function goBack() {
   navigationRef.current.goBack();
 }

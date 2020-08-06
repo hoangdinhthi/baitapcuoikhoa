@@ -6,6 +6,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import SignIn from '../features/auth/SignIn';
 import SignUp from '../features/auth/SignUp';
+import Splash from '../features/auth/Splash';
 import routes from './Routes';
 
 const Stack = createStackNavigator();
@@ -13,6 +14,11 @@ const Stack = createStackNavigator();
 const AuthStack = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen
+        name={routes.auth.splash}
+        component={Splash}
+        options={{ gestureEnabled: false }}
+      />
       <Stack.Screen
         name={routes.auth.signIn}
         component={SignIn}

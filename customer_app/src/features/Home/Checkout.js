@@ -16,39 +16,61 @@ import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
 import { sharedActions } from '../../reduxapp/reducer/sharedReducer';
 import { useNavigation } from '@react-navigation/core';
-
+import { formatCurrency } from '../../service/orderService';
+import { showMessage } from 'react-native-flash-message';
 class Checkout extends Component {
   constructor(props) {
     super(props);
     this.state = {
       phone_number: '',
       address: '',
+      isForcused: false,
     };
   }
+  handleFocus = event => {
+    this.setState({ isForcused: true });
+    if (this.props.onFocus) {
+      this.props.onFocus(event);
+    }
+  };
+  handleBlur = event => {
+    this.setState({ isForcused: false });
+    if (this.props.onBlur) {
+      this.props.onBlur(event);
+    }
+  };
+
   _onpress = () => {
     this.props.navigation.navigate('Store');
   };
 
   render() {
-    var { cartItems, checkout } = this.props;
-    const { phone_number, address } = this.state;
+    var { cartItems, checkout, onFocus, onBlur } = this.props;
+    const { phone_number, address, isForcused } = this.state;
     return (
       <SafeAreaView style={styles.container}>
         <TextBase style={styles.title}>Thông tin Cần Nhập</TextBase>
-        <View style={styles.viewInput}>
-          <TextInput
-            placeholder="Số điện thoại"
-            value={phone_number}
-            onChangeText={phone_number => this.setState({ phone_number })}
-          />
-        </View>
-        <View style={styles.viewInput}>
-          <TextInput
-            placeholder="Địa chỉ"
-            value={address}
-            onChangeText={address => this.setState({ address })}
-          />
-        </View>
+
+        <TextInput
+          style={styles.texs}
+          placeholder="Số điện thoại"
+          value={phone_number}
+          selectionColor={'#428AF8'}
+          underlineColorAndroid={isForcused ? '#428AF8' : '#D3D3D3'}
+          onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
+          onChangeText={phone_number => this.setState({ phone_number })}
+        />
+        <TextInput
+          style={styles.texs}
+          placeholder="Địa chỉ"
+          value={address}
+          selectionColor={'#428AF8'}
+          underlineColorAndroid={isForcused ? '#428AF8' : '#D3D3D3'}
+          onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
+          onChangeText={address => this.setState({ address })}
+        />
         <View style={styles.viewOr}>
           <View style={styles.divider} />
           <TextBase>{'Món ăn'.toUpperCase()}</TextBase>
@@ -64,7 +86,7 @@ class Checkout extends Component {
         <View style={{ flex: 1, flexDirection: 'column', marginTop: 15 }}>
           <View
             style={{
-              borderColor: 'red',
+              borderColor: '#D3D3D3',
               borderWidth: 1,
               flexDirection: 'row',
               backgroundColor: 'white',
@@ -72,17 +94,36 @@ class Checkout extends Component {
             }}>
             <Text style={styles.flatListItems1}>Tổng tiền: </Text>
             <Text style={styles.flatListItems1}>
-              {cartItems.reduce(
-                (acc, el) => (acc += el.quantity * el.price),
-                0,
-              )}
+              {formatCurrency(
+                parseInt(
+                  cartItems.reduce(
+                    (acc, el) => (acc += el.quantity * el.price),
+                    0,
+                  ),
+                ),
+              )}{' '}
+              Đ
             </Text>
           </View>
         </View>
         <Button
-          title={'Thanh toán'.toUpperCase()}
+          title={'Đặt đơn'.toUpperCase()}
           style={styles.btnsubmit}
           onPress={() => {
+            if (!this.state.phone_number) {
+              showMessage({
+                message: 'số điện thoại không được để trống',
+                type: 'danger',
+              });
+              return;
+            }
+            if (!this.state.address) {
+              showMessage({
+                message: 'địa chỉ không được để trống',
+                type: 'danger',
+              });
+              return;
+            }
             checkout({
               phone_number,
               address,
@@ -91,8 +132,7 @@ class Checkout extends Component {
                 quantity: el.quantity,
               })),
             });
-            cartItems = {};
-            this._onpress();
+            // cartItems = {};
           }}
         />
       </SafeAreaView>
@@ -121,7 +161,7 @@ const styles = StyleSheet.create({
   title: {
     marginTop: scales.verticalScale(24 * 3),
     fontSize: scales.moderateScale(24),
-    color: colors.primary,
+    color: colors.black,
     fontWeight: '600',
   },
   viewInput: {
@@ -165,6 +205,10 @@ const styles = StyleSheet.create({
   flatListItems1: {
     fontSize: 14,
     fontWeight: '700',
+  },
+  texs: {
+    height: 70,
+    paddingLeft: 6,
   },
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout);

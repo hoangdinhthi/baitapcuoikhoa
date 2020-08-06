@@ -3,6 +3,7 @@ const routes = {
     main: 'AuthStack',
     signIn: 'SignIn',
     signUp: 'SignUp',
+    splash: 'Splash',
   },
   home: {
     index: 'home',

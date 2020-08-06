@@ -3,7 +3,10 @@
  */
 
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  HeaderBackButton,
+} from '@react-navigation/stack';
 import Home from '../features/Home';
 import routes from './Routes';
 import BottomTab from './BottomTab';
@@ -13,6 +16,8 @@ import ShoppingCartIcon from '../features/Home/ShoppingCartIcon';
 import CartView from '../features/Home/CartView';
 import Checkout from '../features/Home/Checkout';
 import MoreView from '../features/Home/MoreView';
+import OrderDetail from '../features/Cart/Detail';
+
 const Stack = createStackNavigator();
 
 const MainStack = () => {
@@ -27,7 +32,7 @@ const MainStack = () => {
         component={BranchStore}
         options={{
           headerShown: true,
-          headerTitle: 'List Foods',
+          headerTitle: 'Danh sách món ăn',
           headerRight: () => <ShoppingCartIcon />,
         }}
       />
@@ -36,7 +41,7 @@ const MainStack = () => {
         component={Store}
         options={{
           headerShown: true,
-          headerTitle: 'Detail Store',
+          headerTitle: 'Mô phỏng cửa hàng',
           headerRight: () => <ShoppingCartIcon />,
         }}
       />
@@ -44,6 +49,17 @@ const MainStack = () => {
         name="ViewCart"
         component={CartView}
         options={{ headerShown: true, headerTitle: 'Giỏ hàng' }}
+      />
+      <Stack.Screen
+        name="OrderDetail"
+        component={OrderDetail}
+        options={({ navigation, route }) => ({
+          headerTitle: 'Chi tiết đơn hàng',
+          headerShown: true,
+          headerLeft: props => (
+            <HeaderBackButton onPress={() => navigation.navigate('Order')} />
+          ),
+        })}
       />
       <Stack.Screen
         name="Checkout"
@@ -55,7 +71,7 @@ const MainStack = () => {
         component={MoreView}
         options={{
           headerShown: true,
-          headerTitle: 'More foods',
+          headerTitle: 'Chi tiết loại món ăn',
           headerRight: () => <ShoppingCartIcon />,
         }}
       />

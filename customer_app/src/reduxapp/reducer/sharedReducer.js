@@ -8,6 +8,7 @@ export const sharedTypes = {
   FETCH_FOODS_PREVIEW: '@SHARE/FETCH_FOODS_PREVIEW',
   FETCH_FOODS_SUCCESS: '@SHARE/FETCH_FOODS_SUCCESS',
   CHECK_OUT: '@SHARE/CHECK_OUT',
+  CHECK_OUT_SUCCESS: '@SHARE/CHECK_OUT_SUCCESS',
   GET_ORDERS: '@SHARE/GET_ORDERS',
   GET_ORDERS_SUCCESS: '@SHARE/GET_ORDERS_SUCCESS',
   GET_ORDER_DETAIL: '@SHARE/GET_ORDER_DETAIL',
@@ -38,12 +39,25 @@ const fetchFoodPreview = () => {
     type: sharedTypes.FETCH_FOODS_PREVIEW,
   };
 };
+const fetchOrders = () => {
+  return {
+    type: sharedTypes.GET_ORDERS,
+  };
+};
+const fetchOrderDetail = orderId => {
+  return {
+    type: sharedTypes.GET_ORDER_DETAIL,
+    payload: orderId,
+  };
+};
 
 export const sharedActions = {
   fetchPreview,
   fetchSlugFoods,
   fetchFoodPreview,
   checkout,
+  fetchOrders,
+  fetchOrderDetail,
 };
 
 const initialState = {

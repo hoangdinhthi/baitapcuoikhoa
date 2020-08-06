@@ -1,57 +1,38 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  View,
-  ScrollView,
-  TextInput,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
-import Proptypes from 'prop-types';
-import AsyncStorage from '@react-native-community/async-storage';
-import Icon from '../../components/base/Icon';
+import { Dimensions, FlatList, RefreshControl, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { bindActionCreators, compose } from 'redux';
-import { increQuanity, deQuantity } from '../../reduxapp/actionCreator';
+import { bindActionCreators } from 'redux';
+import ListOrder from '../../components/Cart/ListOrder';
+import { sharedActions } from '../../reduxapp/reducer/sharedReducer';
 
 const { width } = Dimensions.get('window');
 class Cart extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      dataCart: [],
-    };
+    this.state = {};
+  }
+
+  componentDidMount() {
+    this.props.fetchOrders();
   }
 
   render() {
-    const { cartItems, incre, de } = this.props;
+    const { Orders } = this.props;
+    console.log(Orders);
     return (
-      <View style={{ flex: 1, flexDirection: 'column' }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            backgroundColor: 'white',
-          }}>
-          <Image
-            source={require('../../Images/bill.jpg')}
-            style={{ width: 100, height: 100, margin: 5 }}
+      <FlatList
+        data={Orders ? Orders : []}
+        renderItem={({ item, index }) => {
+          return <ListOrder item={item} index={index} />;
+        }}
+        keyExtractor={item => `${item._id}`}
+        refreshControl={
+          <RefreshControl
+            refreshing={false}
+            onRefresh={this.props.fetchOrders}
           />
-          <View
-            style={{
-              flex: 1,
-              padding: 10,
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              justifyContent: 'space-evenly',
-            }}>
-            <Text style={styles.flatListItems1}> hóa đơn 1 </Text>
-            <Text style={styles.flatListItems2}>tình trạng</Text>
-          </View>
-        </View>
-        <View style={{ height: 1, backgroundColor: 'white' }} />
-      </View>
+        }
+      />
     );
   }
 }
@@ -68,13 +49,12 @@ const styles = StyleSheet.create({
   },
 });
 const mapStateToProps = state => ({
-  cartItems: state.cartItems,
+  Orders: state.share.orders,
 });
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      incre: increQuanity,
-      de: deQuantity,
+      fetchOrders: sharedActions.fetchOrders,
     },
     dispatch,
   );
