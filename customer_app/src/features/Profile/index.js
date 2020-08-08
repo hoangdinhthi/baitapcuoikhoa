@@ -37,24 +37,23 @@ class Index extends Component {
               <Image
                 source={require('../../Images/pikachu.jpg')}
                 style={styles.image}
+                resizeMode="contain"
               />
             </View>
             <View style={styles.active} />
             <View style={styles.add}>
-              <Icon
-                type="Ionicons"
-                name="ios-add"
-                size={30}
-                color="#DFD8C8"
-                style={{ marginTop: 6, marginLeft: 2 }}
-              />
+              <Icon type="Ionicons" name="ios-add" size={30} color="#DFD8C8" />
             </View>
           </View>
           <View style={styles.infoContainer}>
-            <Text style={[styles.text, { fontWeight: '200', fontSize: 36 }]}>
+            <Text style={[styles.text, { fontWeight: '200', fontSize: 30 }]}>
               Hoàng Đình Thi
             </Text>
-            <Text style={[styles.text, { color: '#AEB5BC', fontSize: 14 }]}>
+            <Text
+              style={[
+                styles.text,
+                { color: '#AEB5BC', fontSize: 14, marginBottom: 15 },
+              ]}>
               Developer
             </Text>
           </View>
@@ -150,11 +149,6 @@ class Index extends Component {
               title="Đánh giá cửa hàng"
               onPress={() => this.onPressOptions()}
               containerStyle={styles.listItemContainer}
-              badge={{
-                value: 5,
-                textStyle: { color: 'white' },
-                containerStyle: { backgroundColor: 'gray', marginTop: 0 },
-              }}
               leftIcon={
                 <BaseIcon
                   containerStyle={{
@@ -186,8 +180,12 @@ class Index extends Component {
               rightIcon={<Chevron />}
             />
           </View>
-          <View style={{ borderWidth: 1, borderColor: '#DFD8C8' }} />
-          <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginVertical: 30,
+            }}>
             <TouchableOpacity
               style={styles.buttonLogout}
               onPress={this.props.requestLogout}>
@@ -221,9 +219,9 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    width: 200,
-    height: 200,
-    borderRadius: 200,
+    width: 120,
+    height: 120,
+    borderRadius: 60,
   },
   titleBar: {
     flexDirection: 'row',
@@ -232,9 +230,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
   },
   profileImage: {
-    width: 200,
-    height: 200,
-    borderRadius: 200,
+    width: 120,
+    height: 120,
+    borderRadius: 60,
     overflow: 'hidden',
     borderWidth: 1,
     borderColor: '#414448',
@@ -252,12 +250,11 @@ const styles = StyleSheet.create({
   add: {
     backgroundColor: '#414448',
     position: 'absolute',
-    bottom: 28,
-    padding: 3,
+    bottom: 8,
     right: 0,
-    width: 40,
-    height: 40,
-    borderRadius: 30,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -286,16 +283,17 @@ const styles = StyleSheet.create({
     borderColor: '#ECECEC',
   },
   buttonLogout: {
-    width: 300,
+    width: 200,
     height: 40,
     backgroundColor: '#ff0000',
-    borderRadius: 10,
+    borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
   textLogout: {
     color: 'white',
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold',
+    letterSpacing: 1.1,
   },
 });

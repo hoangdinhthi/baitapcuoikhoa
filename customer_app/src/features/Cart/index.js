@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ListOrder from '../../components/Cart/ListOrder';
 import { sharedActions } from '../../reduxapp/reducer/sharedReducer';
+import ListEmpty from '../../components/Cart/ListEmpty';
 
 const { width } = Dimensions.get('window');
 class Cart extends Component {
@@ -25,6 +26,7 @@ class Cart extends Component {
         renderItem={({ item, index }) => {
           return <ListOrder item={item} index={index} />;
         }}
+        ListEmptyComponent={<ListEmpty />}
         keyExtractor={item => `${item._id}`}
         refreshControl={
           <RefreshControl

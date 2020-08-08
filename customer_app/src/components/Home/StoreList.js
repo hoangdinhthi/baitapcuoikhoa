@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  SafeAreaView,
-  TextInput,
-  Platform,
-  StatusBar,
-  ScrollView,
-  Image,
-  TouchableHighlight,
-} from 'react-native';
-import Proptypes from 'prop-types';
-import { addingToCart } from '../../reduxapp/actionCreator';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
-import { bindActionCreators, compose } from 'redux';
+import { bindActionCreators } from 'redux';
+import { addingToCart } from '../../reduxapp/actionCreator';
 import { formatCurrency } from '../../service/orderService';
+
 class StoreList extends Component {
   constructor(props) {
     super(props);
@@ -37,12 +27,13 @@ class StoreList extends Component {
     return (
       <View
         style={{
-          height: 300,
+          height: 320,
           width: 140,
           marginLeft: 20,
           borderWidth: 0.5,
           borderColor: '#DDA',
           borderRadius: 10,
+          paddingBottom: 10,
         }}>
         <View style={{ flex: 2 }}>
           <Image
@@ -55,39 +46,39 @@ class StoreList extends Component {
             }}
           />
         </View>
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, padding: 10 }}>
           <Text style={{ fontSize: 14, fontWeight: '700' }}>{item.name}</Text>
-          <Text
-            style={{
-              height: 40,
-              fontSize: 14,
-              fontWeight: '400',
-              color: '#00ffff',
-            }}>
-            {item.description}
-          </Text>
-          <Text style={{ height: 15, fontSize: 14, fontWeight: '700' }}>
-            Giá: {formatCurrency(parseInt(item.price))} Đ
-          </Text>
           <View style={{ flex: 1 }}>
-            <TouchableHighlight
+            <Text
+              numberOfLines={2}
+              style={{
+                fontSize: 14,
+                fontWeight: '400',
+                color: 'grey',
+                overflow: 'hidden',
+              }}>
+              {item.description}
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginTop: 5,
+            }}>
+            <Text style={{ height: 15, fontSize: 14, fontWeight: '700' }}>
+              Giá: {formatCurrency(parseInt(item.price))} Đ
+            </Text>
+            <TouchableOpacity
               onPress={() => this.onClickAddCarts(item)}
-              disabled={hasInCart}
-              activeOpacity={0.5}>
-              <Text
-                style={{
-                  borderWidth: 1,
-                  borderColor: '#a9a9a9',
-                  width: 140,
-                  borderRadius: 5,
-                  fontSize: 10,
-                  fontWeight: '400',
-                  paddingHorizontal: 47,
-                  color: 'red',
-                }}>
-                {hasInCart ? 'Đã thêm' : 'Thêm +'}
-              </Text>
-            </TouchableHighlight>
+              disabled={hasInCart}>
+              <Icon
+                name="plus-circle"
+                size={24}
+                color={hasInCart ? 'grey' : 'red'}
+              />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
