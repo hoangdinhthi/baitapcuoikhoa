@@ -78,10 +78,10 @@ class Main extends Component {
               </Text>
               <View
                 style={{
-                  height: 320,
                   marginTop: 20,
                 }}>
                 <FlatList
+                  showsHorizontalScrollIndicator={false}
                   horizontal
                   data={categories?.pizza ? categories.pizza : []}
                   renderItem={({ item, index }) => {
@@ -192,11 +192,11 @@ class Main extends Component {
                 </View>
                 <View
                   style={{
-                    height: 320,
                     marginTop: 10,
                   }}>
                   <FlatList
                     horizontal
+                    showsHorizontalScrollIndicator={false}
                     data={categories?.m ? categories.m : []}
                     renderItem={({ item, index }) => {
                       return <StoreList item={item} index={index} />;
@@ -272,11 +272,11 @@ class Main extends Component {
                 </View>
                 <View
                   style={{
-                    height: 320,
                     marginTop: 20,
                   }}>
                   <FlatList
                     horizontal
+                    showsHorizontalScrollIndicator={false}
                     data={categories?.topping ? categories.topping : []}
                     renderItem={({ item, index }) => {
                       return <StoreList item={item} index={index} />;

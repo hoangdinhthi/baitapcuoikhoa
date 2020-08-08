@@ -27,7 +27,6 @@ class StoreList extends Component {
     return (
       <View
         style={{
-          height: 320,
           width: 140,
           marginLeft: 20,
           borderWidth: 0.5,
@@ -35,18 +34,17 @@ class StoreList extends Component {
           borderRadius: 10,
           paddingBottom: 10,
         }}>
-        <View style={{ flex: 2 }}>
+        <View>
           <Image
+            resizeMode="cover"
             source={{ uri: item.image }}
             style={{
-              flex: 1,
-              width: null,
-              height: null,
-              resizeMode: 'cover',
+              width: 140,
+              height: 140,
             }}
           />
         </View>
-        <View style={{ flex: 1, padding: 10 }}>
+        <View style={{ padding: 10, height: 120 }}>
           <Text style={{ fontSize: 14, fontWeight: '700' }}>{item.name}</Text>
           <View style={{ flex: 1 }}>
             <Text
