@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View, ActivityIndicator } from 'react-native';
-import Proptypes from 'prop-types';
+import { ActivityIndicator, Image, View } from 'react-native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import AppStorage from '../../config/network/storage';
 import { authActions } from '../../reduxapp/reducer/authReducer';
-import { connect } from 'react-redux';
-import { bindActionCreators, compose } from 'redux';
 
 class SlashScreen extends Component {
   constructor(props) {
@@ -29,8 +28,20 @@ class SlashScreen extends Component {
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
+          backgroundColor: '#009387',
         }}>
-        <ActivityIndicator />
+        <Image
+          animation="bounceIn"
+          duraton="1500"
+          source={require('../../Images/logo.png')}
+          style={{
+            width: 150,
+            height: 150,
+            marginBottom: 20,
+          }}
+          resizeMode="stretch"
+        />
+        <ActivityIndicator size="large" color="white" />
       </View>
     );
   }

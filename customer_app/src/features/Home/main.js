@@ -33,6 +33,10 @@ class Main extends Component {
     };
   }
 
+  componentDidMount() {
+    this.props.fetchPreview();
+  }
+
   render() {
     const { categories } = this.props;
     return (
