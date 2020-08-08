@@ -122,7 +122,8 @@ class Main extends Component {
                   </TouchableOpacity>
                 </View>
                 <View>
-                  <Text style={{ fontSize: 20, fontWeight: '700' }}>
+                  <Text
+                    style={{ fontSize: 20, fontWeight: '700', marginTop: 15 }}>
                     Hình ảnh cửa hàng
                   </Text>
                   <Swiper

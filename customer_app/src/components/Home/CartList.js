@@ -15,8 +15,6 @@ class CartList extends Component {
         style={{
           flexDirection: 'row',
           backgroundColor: 'white',
-          borderColor: '#D3D3D3',
-          borderWidth: 1,
         }}>
         <Image
           source={{ uri: item.image }}

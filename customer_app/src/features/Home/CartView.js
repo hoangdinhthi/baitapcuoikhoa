@@ -18,7 +18,7 @@ import { formatCurrency } from '../../service/orderService';
 const { width } = Dimensions.get('window');
 const CartView = props => {
   const navigation = useNavigation();
-  _onpress = () => {
+  const _onpress = () => {
     navigation.navigate('Checkout');
   };
   const { cartItems, incre, de } = props;
@@ -29,25 +29,8 @@ const CartView = props => {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: 'white',
       }}>
-      <View
-        style={{
-          height: 20,
-        }}
-      />
-      <Text
-        style={{
-          fontSize: 32,
-          fontWeight: 'bold',
-          color: '#33c37d',
-        }}>
-        Giỏ hàng
-      </Text>
-      <View
-        style={{
-          height: 10,
-        }}
-      />
       <View
         style={{
           flex: 1,
@@ -58,18 +41,18 @@ const CartView = props => {
               <View
                 style={{
                   width: width - 20,
-                  margin: 10,
-                  backgroundColor: 'transparent',
+                  marginTop: 10,
+                  marginBottom: 5,
                   flexDirection: 'row',
-                  borderBottomWidth: 2,
+                  borderBottomWidth: StyleSheet.hairlineWidth,
                   borderColor: '#cccccc',
                   paddingBottom: 10,
                 }}>
                 <Image
-                  resizeMode="contain"
+                  resizeMode="cover"
                   style={{
                     width: width / 3,
-                    height: width / 3,
+                    height: 100,
                   }}
                   source={{
                     uri: item.image,
@@ -86,22 +69,22 @@ const CartView = props => {
                     <Text
                       style={{
                         fontWeight: 'bold',
-                        fontSize: 20,
+                        fontSize: 16,
                       }}>
                       {item.name}
                     </Text>
-                    <Text> {item.description}</Text>
+                    <Text>{item.description}</Text>
                   </View>
                   <View
                     style={{
                       flexDirection: 'row',
                       justifyContent: 'space-between',
+                      alignItems: 'center',
                     }}>
                     <Text
                       style={{
                         fontWeight: 'bold',
-                        color: '#33c37d',
-                        fontSize: 20,
+                        fontSize: 18,
                       }}>
                       {formatCurrency(parseInt(item.price * item.quantity))} Đ
                     </Text>
@@ -115,12 +98,12 @@ const CartView = props => {
                           type="Ionicons"
                           name="ios-remove-circle"
                           size={35}
-                          color="#33c37d"
+                          color="red"
                         />
                       </TouchableOpacity>
                       <Text
                         style={{
-                          paddingHorizontal: 8,
+                          paddingHorizontal: 15,
                           fontWeight: 'bold',
                           fontSize: 18,
                         }}>
@@ -131,7 +114,7 @@ const CartView = props => {
                           type="Ionicons"
                           name="ios-add-circle"
                           size={35}
-                          color="#33c37d"
+                          color="red"
                         />
                       </TouchableOpacity>
                     </View>
@@ -148,18 +131,20 @@ const CartView = props => {
           <TouchableOpacity
             style={{
               backgroundColor: '#33c37d',
-              width: width - 40,
+              width: 200,
               alignItems: 'center',
-              padding: 10,
-              borderRadius: 5,
+              padding: 12,
               margin: 20,
+              borderRadius: 50,
+              alignSelf: 'center',
             }}
             onPress={_onpress}>
             <Text
               style={{
-                fontSize: 24,
+                fontSize: 16,
                 fontWeight: 'bold',
                 color: 'white',
+                letterSpacing: 1.1,
               }}>
               Xác nhận
             </Text>
