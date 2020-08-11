@@ -6,51 +6,41 @@ import { useNavigation } from '@react-navigation/core';
 
 const ListOrder = ({ item }) => {
   const navigation = useNavigation();
-  if (item != null) {
-    return (
-      <View style={{ flex: 1, flexDirection: 'column' }} key={item._id}>
+  return (
+    <View style={{ flex: 1, flexDirection: 'column' }} key={item._id}>
+      <View
+        style={{
+          flexDirection: 'row',
+          backgroundColor: 'white',
+        }}>
+        <Image
+          source={require('../../Images/bill.jpg')}
+          style={{ width: 100, height: 100, margin: 5 }}
+        />
         <View
           style={{
-            flexDirection: 'row',
-            backgroundColor: 'white',
+            flex: 1,
+            padding: 10,
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            justifyContent: 'space-evenly',
           }}>
-          <Image
-            source={require('../../Images/bill.jpg')}
-            style={{ width: 100, height: 100, margin: 5 }}
-          />
-          <View
-            style={{
-              flex: 1,
-              padding: 10,
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              justifyContent: 'space-evenly',
-            }}>
-            <Text style={styles.flatListItems1}>
-              Đơn hàng lúc {moment(item.createdAt).format('HH:mm DD/MM')}
-            </Text>
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('OrderDetail', {
-                  orderId: item._id,
-                })
-              }>
-              <Text style={styles.chitietorder}>Chi tiết >></Text>
-            </TouchableOpacity>
-          </View>
+          <Text style={styles.flatListItems1}>
+            Đơn hàng lúc {moment(item.createdAt).format('HH:mm DD/MM')}
+          </Text>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('OrderDetail', {
+                orderId: item._id,
+              })
+            }>
+            <Text style={styles.chitietorder}>Chi tiết >></Text>
+          </TouchableOpacity>
         </View>
-        <View style={{ height: 1, backgroundColor: 'white' }} />
       </View>
-    );
-  } else {
-    return (
-      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ fontSize: 20 }}>
-          Xin mời bạn đặt hàng để xem lịch sử order
-        </Text>
-      </View>
-    );
-  }
+      <View style={{ height: 1, backgroundColor: 'white' }} />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({

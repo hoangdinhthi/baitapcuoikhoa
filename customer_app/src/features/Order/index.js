@@ -17,8 +17,8 @@ import http from '../../config/network';
 import storeIcon from '../../Images/store.png';
 
 const STORE_POSITION = {
-  latitude: 21.0372046,
-  longitude: 105.7775074,
+  latitude: 21.0370594,
+  longitude: 105.7777756,
 };
 
 const initGeo = {
@@ -40,10 +40,13 @@ const Map = ({}) => {
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         Geolocation.getCurrentPosition(
           async position => {
-            const url = `https://maps.googleapis.com/maps/api/directions/json?mode=walking&origin=${position.coords.latitude},${position.coords.longitude}&destination=${STORE_POSITION.latitude},${STORE_POSITION.longitude}&key=AIzaSyD4C27tVX4h9Qge4NIsw8Xu7Cw2c6Rsdaw`;
+            console.log('lat: ', position.coords.latitude);
+            console.log('Long: ', position.coords.longitude);
             try {
+              const url = `https://maps.googleapis.com/maps/api/directions/json?mode=walking&origin=${position.coords.latitude},${position.coords.longitude}&destination=${STORE_POSITION.latitude},${STORE_POSITION.longitude}&key=AIzaSyD4C27tVX4h9Qge4NIsw8Xu7Cw2c6Rsdaw`;
               const result = await http.get(url);
               if (result.data?.routes.length) {
+                console.log(result.data.routes[0].overview_polyline.points);
                 const myPlace = {
                   type: 'FeatureCollection',
                   features: [
@@ -102,11 +105,9 @@ const Map = ({}) => {
               setGeojson({
                 ...initGeo,
               });
-            } finally {
             }
           },
           error => {
-            // See error code charts below.
             console.log(error.code, error.message);
           },
           { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
@@ -133,10 +134,6 @@ const Map = ({}) => {
                   latitude: position.coords.latitude,
                   longitude: position.coords.longitude,
                 },
-
-                // Only on iOS MapKit, in meters. The property is ignored by Google Maps.
-
-                // Only when using Google Maps.
               });
             }
           },
@@ -193,6 +190,7 @@ const Map = ({}) => {
     <View style={styles.container}>
       <MapView
         ref={map}
+        showsUserLocation
         onLayout={onLayout}
         provider={PROVIDER_GOOGLE} // remove if not using Google Maps
         style={styles.map}
