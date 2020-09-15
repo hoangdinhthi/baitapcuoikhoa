@@ -34,10 +34,6 @@ class Main extends Component {
   }
 
   componentDidMount() {
-    this.startHeaderHeight = 80;
-    if (Platform.OS === 'android') {
-      this.startHeaderHeight = 100 + StatusBar.currentHeight;
-    }
     this.props.fetchPreview();
   }
 
@@ -48,7 +44,6 @@ class Main extends Component {
         <View style={styles.common}>
           <View
             style={{
-              height: this.startHeaderHeight,
               backgroundColor: 'white',
               borderBottomWidth: 1,
               borderBottomColor: '#dddddd',
@@ -60,6 +55,7 @@ class Main extends Component {
                 })
               }>
               <View style={styles.search}>
+                <Icon type="Ionicons" name="md-search" size={30} />
                 <TextInput
                   underlineColorAndroid="transparent"
                   placeholder="Tìm kiếm món ăn"
@@ -67,7 +63,6 @@ class Main extends Component {
                   style={styles.text}
                   editable={false}
                 />
-                <Icon type="Ionicons" name="md-search" size={50} />
               </View>
             </TouchableOpacity>
           </View>
@@ -83,10 +78,10 @@ class Main extends Component {
               </Text>
               <View
                 style={{
-                  height: 320,
                   marginTop: 20,
                 }}>
                 <FlatList
+                  showsHorizontalScrollIndicator={false}
                   horizontal
                   data={categories?.pizza ? categories.pizza : []}
                   renderItem={({ item, index }) => {
@@ -127,7 +122,8 @@ class Main extends Component {
                   </TouchableOpacity>
                 </View>
                 <View>
-                  <Text style={{ fontSize: 20, fontWeight: '700' }}>
+                  <Text
+                    style={{ fontSize: 20, fontWeight: '700', marginTop: 15 }}>
                     Hình ảnh cửa hàng
                   </Text>
                   <Swiper
@@ -196,11 +192,11 @@ class Main extends Component {
                 </View>
                 <View
                   style={{
-                    height: 320,
                     marginTop: 10,
                   }}>
                   <FlatList
                     horizontal
+                    showsHorizontalScrollIndicator={false}
                     data={categories?.m ? categories.m : []}
                     renderItem={({ item, index }) => {
                       return <StoreList item={item} index={index} />;
@@ -276,11 +272,11 @@ class Main extends Component {
                 </View>
                 <View
                   style={{
-                    height: 320,
                     marginTop: 20,
                   }}>
                   <FlatList
                     horizontal
+                    showsHorizontalScrollIndicator={false}
                     data={categories?.topping ? categories.topping : []}
                     renderItem={({ item, index }) => {
                       return <StoreList item={item} index={index} />;
@@ -333,7 +329,8 @@ const styles = StyleSheet.create({
   search: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 10,
+    alignItems: 'center',
+    paddingHorizontal: 15,
     backgroundColor: 'white',
     marginHorizontal: 20,
     shadowOffset: {
@@ -343,8 +340,8 @@ const styles = StyleSheet.create({
     shadowColor: 'black',
     shadowOpacity: 0.2,
     elevation: 2,
-    borderRadius: 15,
-    marginVertical: Platform.OS == 'android' ? 30 : null,
+    borderRadius: 25,
+    marginVertical: 20,
   },
   icon: {
     marginRight: 10,
@@ -384,6 +381,8 @@ const styles = StyleSheet.create({
   fabbutton: {
     position: 'absolute',
     backgroundColor: 'white',
+    borderRadius: 25,
+    elevation: 5,
     width: 50,
     height: 50,
     alignItems: 'center',

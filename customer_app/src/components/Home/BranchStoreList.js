@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableHighlight,
   Dimensions,
+  StatusBar,
 } from 'react-native';
 import Proptypes from 'prop-types';
 import Icon from '../base/Icon';
@@ -27,6 +28,7 @@ class BranchStoreList extends Component {
     const hasInCart = this.props.cartItems.find(el => el.name === item.name);
     return (
       <View style={{ flex: 1, flexDirection: 'column' }}>
+        <StatusBar backgroundColor="gray" />
         <View
           style={{
             flex: 1,

@@ -6,8 +6,38 @@ import Home from '../features/Home';
 import Homes from '../features/Home/main';
 import Orders from '../features/Cart';
 import Icon from '../components/base/Icon';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+const OrderScreen = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Order"
+        component={Orders}
+        options={{
+          headerTitle: 'Danh sách đơn hàng',
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const MapScreen = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Map"
+        component={Order}
+        options={{
+          headerTitle: 'Vị trí cửa hàng',
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 const BottomTab = () => {
   return (
@@ -33,10 +63,9 @@ const BottomTab = () => {
       />
       <Tab.Screen
         name="Order"
-        component={Orders}
+        component={OrderScreen}
         options={{
-          tabBarLabel: 'Order',
-          headerShown: true,
+          tabBarLabel: 'Đơn hàng',
           tabBarIcon: ({ color, size }) => (
             <Icon
               type="MaterialCommunityIcons"
@@ -49,13 +78,13 @@ const BottomTab = () => {
       />
       <Tab.Screen
         name="Address"
-        component={Order}
+        component={MapScreen}
         options={{
-          tabBarLabel: 'Address',
+          tabBarLabel: 'Cửa hàng',
           tabBarIcon: ({ color, size }) => (
             <Icon
               type="MaterialCommunityIcons"
-              name="bell"
+              name="map"
               color={color}
               size={size}
             />
@@ -63,10 +92,10 @@ const BottomTab = () => {
         }}
       />
       <Tab.Screen
-        name="Profile"
+        name="Tôi"
         component={Profile}
         options={{
-          tabBarLabel: 'Profile',
+          tabBarLabel: 'Tôi',
           tabBarIcon: ({ color, size }) => (
             <Icon
               type="MaterialCommunityIcons"

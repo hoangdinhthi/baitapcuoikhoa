@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   Image,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
 import { TextBase, Button, TouchWithout } from '../../components';
 import { scales, colors } from '../../config';
@@ -18,6 +19,8 @@ import { sharedActions } from '../../reduxapp/reducer/sharedReducer';
 import { useNavigation } from '@react-navigation/core';
 import { formatCurrency } from '../../service/orderService';
 import { showMessage } from 'react-native-flash-message';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 class Checkout extends Component {
   constructor(props) {
     super(props);
@@ -25,6 +28,7 @@ class Checkout extends Component {
       phone_number: '',
       address: '',
       isForcused: false,
+      mode: 1,
     };
   }
   handleFocus = event => {
@@ -91,6 +95,9 @@ class Checkout extends Component {
               flexDirection: 'row',
               backgroundColor: 'white',
               justifyContent: 'space-between',
+              paddingVertical: 15,
+              paddingHorizontal: 15,
+              borderRadius: 4,
             }}>
             <Text style={styles.flatListItems1}>Tổng tiền: </Text>
             <Text style={styles.flatListItems1}>
@@ -105,6 +112,58 @@ class Checkout extends Component {
               Đ
             </Text>
           </View>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+          }}>
+          <TouchableOpacity
+            onPress={() =>
+              this.setState({
+                mode: 0,
+              })
+            }
+            style={[
+              styles.item,
+              this.state.mode === 0 && {
+                borderColor: 'red',
+              },
+            ]}>
+            <Icon
+              name="cards"
+              size={20}
+              color={this.state.mode === 0 ? 'black' : '#D3D3D3'}
+            />
+            <Text
+              style={{ color: this.state.mode === 0 ? 'black' : '#D3D3D3' }}>
+              Thẻ ngân hàng
+            </Text>
+          </TouchableOpacity>
+          <View style={{ width: 10 }} />
+          <TouchableOpacity
+            onPress={() =>
+              this.setState({
+                mode: 1,
+              })
+            }
+            style={[
+              styles.item,
+              this.state.mode === 1 && {
+                borderColor: 'red',
+              },
+            ]}>
+            <Icon
+              name="cash"
+              size={20}
+              color={this.state.mode === 1 ? 'black' : '#D3D3D3'}
+            />
+            <Text
+              style={{
+                color: this.state.mode === 1 ? 'black' : '#D3D3D3',
+              }}>
+              Tiền mặt
+            </Text>
+          </TouchableOpacity>
         </View>
         <Button
           title={'Đặt đơn'.toUpperCase()}
@@ -156,10 +215,11 @@ const mapDispatchToProps = dispatch =>
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: scales.horizontalScale(24),
+    paddingHorizontal: scales.horizontalScale(15),
+    backgroundColor: 'white',
   },
   title: {
-    marginTop: scales.verticalScale(24 * 3),
+    marginTop: scales.verticalScale(24),
     fontSize: scales.moderateScale(24),
     color: colors.black,
     fontWeight: '600',
@@ -196,6 +256,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: 10,
   },
   divider: {
     height: StyleSheet.hairlineWidth,
@@ -209,6 +270,15 @@ const styles = StyleSheet.create({
   texs: {
     height: 70,
     paddingLeft: 6,
+  },
+  item: {
+    height: 55,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 4,
+    borderWidth: 1.5,
+    borderColor: '#D3D3D3',
   },
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout);

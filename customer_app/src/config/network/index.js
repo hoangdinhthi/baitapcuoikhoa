@@ -2,7 +2,7 @@ import axios from 'axios';
 import Storage from './storage';
 
 const http = axios.create({
-  baseURL: 'http://192.168.0.102:3000/api/v1/',
+  baseURL: 'http://172.20.10.6:3000/api/v1/',
   timeout: 180000,
   headers: { 'Content-Type': 'application/json' },
 });
