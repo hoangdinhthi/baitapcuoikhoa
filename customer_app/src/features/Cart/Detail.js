@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
 import moment from 'moment';
 import { formatCurrency } from '../../service/orderService';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const { width } = Dimensions.get('window');
 
@@ -214,6 +215,23 @@ class OrderDetail extends Component {
             </Text>
           </View>
         ) : null}
+        {orderDetail?.status == 0 ? (
+          <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+            <TouchableOpacity
+              style={{
+                backgroundColor: 'red',
+                width: 200,
+                alignItems: 'center',
+                padding: 12,
+                margin: 20,
+                borderRadius: 50,
+                alignSelf: 'center',
+              }}
+              onPress={() => this.props.cancelOrder(orderDetail._id)}>
+              <Text style={{ color: 'white' }}>Hủy đơn hàng</Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
       </ScrollView>
     );
   }
@@ -225,6 +243,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       fetchOrderDetail: sharedActions.fetchOrderDetail,
+      cancelOrder: sharedActions.cancelOrder,
     },
     dispatch,
   );

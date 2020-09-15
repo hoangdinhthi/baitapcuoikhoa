@@ -39,6 +39,7 @@ const CartView = props => {
           {cartItems.map((item, i) => {
             return (
               <View
+                key={i}
                 style={{
                   width: width - 20,
                   marginTop: 10,

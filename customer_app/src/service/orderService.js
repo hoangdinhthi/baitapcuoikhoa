@@ -32,3 +32,11 @@ export const formatCurrency = (n, separate = '.') => {
     return '0';
   }
 };
+export const cancelOrder = async data => {
+  try {
+    const res = await http.put('carts', data);
+    return res.data.cart;
+  } catch (error) {
+    return [];
+  }
+};

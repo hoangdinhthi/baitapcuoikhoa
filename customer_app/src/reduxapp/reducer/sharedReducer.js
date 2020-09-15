@@ -13,12 +13,20 @@ export const sharedTypes = {
   GET_ORDERS_SUCCESS: '@SHARE/GET_ORDERS_SUCCESS',
   GET_ORDER_DETAIL: '@SHARE/GET_ORDER_DETAIL',
   GET_ORDER_DETAIL_SUCCESS: '@SHARE/GET_ORDER_DETAIL_SUCCESS',
+  CANCEL_ORDER: '@SHARE/CANCEL_ORDER',
+  CANCEL_ORDER_SUCCESS: '@SHARE/CANCEL_ORDER_SUCCESS',
 };
 
 const checkout = data => {
   return {
     type: sharedTypes.CHECK_OUT,
     payload: data,
+  };
+};
+const cancelOrder = idCart => {
+  return {
+    type: sharedTypes.CANCEL_ORDER,
+    payload: idCart,
   };
 };
 
@@ -58,6 +66,7 @@ export const sharedActions = {
   checkout,
   fetchOrders,
   fetchOrderDetail,
+  cancelOrder,
 };
 
 const initialState = {

@@ -241,3 +241,31 @@ function* getOrderDetailWorker(action) {
 export function* getOrderDetailWatcher() {
   yield takeLatest(sharedTypes.GET_ORDER_DETAIL, getOrderDetailWorker);
 }
+
+function* cancelOrderwWorker(action) {
+  try {
+    yield put({
+      type: sharedTypes.FETCHING,
+    });
+    const user_id = yield select(state => state.auth.profile._id);
+    console.log(user_id);
+
+    yield call(OrderService.cancelOrder, {
+      cart_id: action.payload,
+      cart: {
+        user_id: user_id,
+        status: 4,
+      },
+    });
+  } catch (error) {
+    console.log('auth', error);
+  } finally {
+    yield put({
+      type: sharedTypes.DONE,
+    });
+  }
+}
+
+export function* cancelOrderWatcher() {
+  yield takeLatest(sharedTypes.CANCEL_ORDER, cancelOrderwWorker);
+}
