@@ -17,7 +17,7 @@
     "@react-navigation/material-top-tabs": "^5.0.0",
     "@react-navigation/native": "^5.0.0",
     "@react-navigation/stack": "^5.0.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "emojione": "^4.5.0",
     "i18n-js": "^3.5.1",
     "lodash": "^4.17.15",
